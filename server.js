@@ -8,7 +8,7 @@ let bodyParser = require('body-parser');
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 let pgp = require('pg-promise')();
 const dbpath = require('./dbpath');
-let db = pgp(dbpath.path);
+let db = pgp(dbpath.path);  //replace 'dbpath.path' with 'postgres://username:password@localhost/dbname' or create dbpath.json file with this text
 
 app.set('view engine', 'pug');
 let currentUser = "";
@@ -39,7 +39,8 @@ app.post('/register', urlencodedParser, (req, res) => {
         .then(() => {
             console.log("account added");
         })
-        .catch(() => {});
+        .catch(() => {
+        });
 
     res.render('profile', {data: req.body, current: currentUser});
     console.log(req.body);
@@ -47,40 +48,32 @@ app.post('/register', urlencodedParser, (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {errorCode: ""})
 });
 
 app.post('/login', urlencodedParser, (req, res) => {
-    db.one("SELECT pid FROM accounts WHERE login = $1 and pass = $2 ", [req.body.login, req.body.password])
+    db.one("SELECT pid FROM accounts WHERE login = $1 and pass = $2", [req.body.login, req.body.password])
         .then((data) => {
-            console.log(data.pid);
             if (data.pid !== null) {
                 currentUser = req.body.login;
                 usersData['login'] = req.body.login;
                 usersData['password'] = req.body.password;
-                let ni = currentUser.indexOf('@');
-                currentUser = currentUser.substring(0, ni);
+                currentUser = currentUser.substring(0, currentUser.indexOf('@'));
                 res.render('profile', {data: req.body, current: currentUser});
                 console.log(req.body);
                 console.log(usersData)
             }
         })
         .catch(() => {
-            res.redirect('/404')
+            res.render('login', {errorCode: "Неправильный логин и/или пароль!!"})
         });
-
-    // db.one("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, req.body.password])
-    //     .then(() => {
-    //         console.log("account added");
-    //     })
-    //     .catch(() => {});
 });
 
 ///render profile page
 app.get('/profile', (req, res) => {
     if (currentUser === "") res.redirect('/404');
     else
-        res.render('profile', { data: usersData, current: currentUser});
+        res.render('profile', {data: usersData, current: currentUser});
 });
 
 

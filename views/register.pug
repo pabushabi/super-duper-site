@@ -18,6 +18,8 @@ html(lang='en')
             .pass_container
                 label#pass_label(for='pass') Пароль:
                 br
-                input#pass(type='password', name='password', placeholder='qwerty', required=true)
+                input#pass(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}',
+                title="8-32 латинских буквы(минимум одна заглавная и одна строчная) и цифры", placeholder='qwerty', required=true)
+                #visible @
             button#submit(type='submit') Подтвердить!
         script(src='/assets/script.js')

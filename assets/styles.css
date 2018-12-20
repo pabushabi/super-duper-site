@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    /*background-color: #f8f8f9;*/
+}
+
+::selection {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: crimson;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
+    z-index: 10;
+}
+
+a.logo {
+    position: relative;
+    top: 14%;
+    margin-left: 5%;
+    font-weight: lighter;
+    color: #fff;
+    font-size: xx-large;
+}
+
+h1 {
+    position: fixed;
+    top: 170px;
+    width: 100%;
+    text-align: center;
+}
+
+a {
+    position: fixed;
+    top: 70px;
+    color: #7b7b7b;
+    text-decoration: none;
+}
+
+a#back\/ {
+    width: 100%;
+    text-align: center;
+    top: 250px;
+}
+
+a#err {
+    top: 100px;
+    left: 70px;
+}
+
+p#hello {
+    position: fixed;
+    top: 300px;
+    width: 100%;
+    text-align: center;
+}
+
+p#yourma {
+    position: fixed;
+    top: 340px;
+    width: 100%;
+    text-align: center;
+}
+
+p#yourpa {
+    position: fixed;
+    top: 380px;
+    width: 100%;
+    text-align: center;
+}
+
+.reg_form {
+    position: fixed;
+    margin-top: 250px;
+    left: 41%;
+    width: 18%;
+}
+
+#form_h {
+    text-align: center;
+    width: 100%;
+}
+
+#alter {
+    width: 100%;
+    text-align: center;
+    top: 28%;
+    left: 10%;
+}
+
+#email_label, #pass_label {
+    font-size: larger;
+}
+
+button#submit {
+    position: relative;
+    top: 15px;
+    left: 60px;
+    width: 150px;
+    height: 30px;
+    background-color: crimson;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 0;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
+    outline: 0;
+}
+
+button#submit:focus {
+    box-shadow: 0 3px 2px rgba(27, 31, 35, 0.15), inset 3px 3px 5px rgba(27, 31, 35, 0.3);
+}
+
+input {
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 250px;
+    height: 30px;
+    border-radius: 2px;
+    border: solid #656564 1px;
+    font-size: 16px;
+    outline: 0;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.05);
+}
+
+input::placeholder {
+    color: #999999;
+}
+
+input:focus {
+    border-color: crimson;
+}
+
+#section {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 36% 0 16%;
+    top: 80px;
+    position: absolute;
+}
+
+.art {
+    position: static;
+    padding: 10px;
+    margin: 10px;
+    background: #fff;
+    flex-direction: row;
+    flex: 1 1000px;
+    border-radius: 3px;
+    border: 1px solid #BFBFBF;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+    cursor: pointer;
+    overflow: hidden;
+    height: 80px; /*220px*/
+    width: 700px; /*700px*/
+    transition: height 0.3s ease-out;
+}
+
+h2 {
+    width: 50%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    margin: 0 0 0 20px;
+}
+
+.search_bar {
+    position: fixed;
+    right: 17%;
+    top: 90px;
+    width: 220px;
+    height: 500px;
+    border-radius: 3px;
+    border: 1px solid #BFBFBF;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+}
+
+label#search_label {
+    margin: 15px;
+    position: relative;
+    top: 10px;
+    font-size: large;
+}
+
+label.label_check, label.label_radio {
+    position: relative;
+    bottom: 7px;
+    left: 3px;
+}
+
+input#search_input {
+    width: 200px;
+    margin: 20px 10px 10px;
+}
+
+input.search_check {
+    width: 23px;
+    height: 23px;
+}
+
+input.radio {
+    width: 23px;
+    height: 23px;
+}
+
+p#askingfor {
+    margin: 15px 15px 0;
+    font-size: large;
+    position: relative;
+    top: -10px;
+}
+
+.radio-li {
+    padding: 0;
+    margin: 0;
+}
+
+.radio-ul {
+    margin-top: 0;
+}
+
+input.search_check:checked {
+    color: crimson;
+    border: crimson;
+}
+
+ul {
+    margin: 10px;
+}
+
+li {
+    margin-top: 10px;
+}
+
+img {
+    position: relative;
+    top: -145px;
+    right: -660px;
+    width: 40px;
+    height: 40px;
+    z-index: 9;
+}
+
+.reg_log {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 20px 60px 20px 20px;
+}
+
+#li-log, #li-reg, #li-pro {
+    display: inline;
+    margin-right: 30px;
+}
+
+#li-pro {
+    display: none;
+}
+
+a#log, a#reg, a#pro {
+    position: relative;
+    top: 1%;
+    color: white;
+}
+
+a#log {
+    padding: 7px 10px;
+    margin-right: -10px;
+    color: black;
+    background-color: aliceblue;
+    border-radius: 3px;
+    border: 1px solid #BFBFBF;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+}

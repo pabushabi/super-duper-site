@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    head
+        title #{current}
+        link(href='/assets/styles.css', rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+    body
+        include header
+        p#hello Привет, #{current}
+        p#yourma Ваша электронная почта: #{data.login}
+        p#yourpa Ваш пароль: #{data.password}
+
+        a(href='/', id='back/') Назад на главную
+
+        script(src='/assets/script.js')

@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Регистрация
+        link(href='/assets/styles.css', rel='stylesheet')
+        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+    body
+        include header
+        h1#form_h Регистрация
+        a#alter(href='/login') Войти
+
+        form.reg_form(method='post', action='')
+            .mail_container
+                label#email_label(for='email') Электронная почта:
+                br
+                input#email(type='email', name='login', placeholder='e-mail@domain.com', required=true)
+            .pass_container
+                label#pass_label(for='pass') Пароль:
+                br
+                input#pass(type='password', name='password', placeholder='qwerty', required=true)
+            button#submit(type='submit') Подтвердить!
+        script(src='/assets/script.js')

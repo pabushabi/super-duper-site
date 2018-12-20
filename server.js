@@ -51,23 +51,22 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', urlencodedParser, (req, res) => {
-    currentUser = req.body.login;
-    usersData['login'] = req.body.login;
-    usersData['password'] = req.body.password;
-    let ni = currentUser.indexOf('@');
-    currentUser = currentUser.substring(0, ni);
-
     db.one("SELECT pid FROM accounts WHERE login = $1 and pass = $2 ", [req.body.login, req.body.password])
         .then((data) => {
             console.log(data.pid);
             if (data.pid !== null) {
+                currentUser = req.body.login;
+                usersData['login'] = req.body.login;
+                usersData['password'] = req.body.password;
+                let ni = currentUser.indexOf('@');
+                currentUser = currentUser.substring(0, ni);
                 res.render('profile', {data: req.body, current: currentUser});
                 console.log(req.body);
                 console.log(usersData)
             }
         })
         .catch(() => {
-            res.render('404')
+            res.redirect('/404')
         });
 
     // db.one("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, req.body.password])
@@ -79,7 +78,7 @@ app.post('/login', urlencodedParser, (req, res) => {
 
 ///render profile page
 app.get('/profile', (req, res) => {
-    if (currentUser === "") res.render('404');
+    if (currentUser === "") res.redirect('/404');
     else
         res.render('profile', { data: usersData, current: currentUser});
 });
@@ -90,11 +89,8 @@ app.use('/assets', express.static('assets'));
 
 
 ///404 error
-app.get('/:err', (req, res) => {
-    res.render('404')
-});
-app.get('/:err/:er', (req, res) => {
-    res.render('404')
+app.get('/:err*', (req, res) => {
+    res.status(404).render('404')
 });
 
 const port = 200;

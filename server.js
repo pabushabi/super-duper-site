@@ -1,14 +1,15 @@
 'use strict';
 
-let fs = require('fs');
-let express = require('express');
-let app = express();
-let pug = require('pug');
-let bodyParser = require('body-parser');
-let urlencodedParser = bodyParser.urlencoded({extended: false});
-let pgp = require('pg-promise')();
+const fs = require('fs');
+const express = require('express');
+const app = express();
+const pug = require('pug');
+const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded({extended: false});
+const pgp = require('pg-promise')();
 const dbpath = require('./dbpath');
-let db = pgp(dbpath.path);  //replace 'dbpath.path' with 'postgres://username:password@localhost/dbname' or create dbpath.json file with this text
+const db = pgp(dbpath.path);  //replace 'dbpath.path' with 'postgres://username:password@localhost/dbname' or create dbpath.json file with this text
+const jsonParser = express.json();
 
 app.set('view engine', 'pug');
 let currentUser = "";
@@ -22,6 +23,11 @@ app.get('/', (req, res) => {
         res.render('index');
     else
         res.render('index', {user: currentUser})
+});
+
+app.post('/', jsonParser, (req, res) => {
+    console.log(req.body);
+    res.json(`${req.body.search_req}, ${req.body.radio}`)
 });
 
 app.get('/register', (req, res) => {
@@ -65,7 +71,7 @@ app.post('/login', urlencodedParser, (req, res) => {
             }
         })
         .catch(() => {
-            res.render('login', {errorCode: "Неправильный логин и/или пароль!!"})
+            res.render('login', {errorCode: "Неправильный логин и/или пароль!"})
         });
 });
 
@@ -74,6 +80,10 @@ app.get('/profile', (req, res) => {
     if (currentUser === "") res.redirect('/404');
     else
         res.render('profile', {data: usersData, current: currentUser});
+});
+
+app.get('/resume', (req, res) => {
+    res.render('resume')
 });
 
 

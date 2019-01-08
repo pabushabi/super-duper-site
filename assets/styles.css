@@ -6,6 +6,7 @@
 html {
     font-family: 'Roboto', sans-serif;
     /*background-color: #f8f8f9;*/
+    background-color: #f8f8f8;
 }
 
 ::selection {
@@ -54,27 +55,6 @@ a#back\/ {
 a#err {
     top: 100px;
     left: 70px;
-}
-
-p#hello {
-    position: fixed;
-    top: 300px;
-    width: 100%;
-    text-align: center;
-}
-
-p#yourma {
-    position: fixed;
-    top: 340px;
-    width: 100%;
-    text-align: center;
-}
-
-p#yourpa {
-    position: fixed;
-    top: 380px;
-    width: 100%;
-    text-align: center;
 }
 
 .reg_form {
@@ -141,10 +121,15 @@ input:focus {
     border-color: crimson;
 }
 
+#main {
+    margin: 0 auto;
+    width: 80%;
+}
+
 #section {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 36% 0 16%;
+    margin: 0 34% 0 6%;
     top: 80px;
     position: absolute;
 }
@@ -162,7 +147,7 @@ input:focus {
     cursor: pointer;
     overflow: hidden;
     height: 80px; /*220px*/
-    width: 700px; /*700px*/
+    width: 50%; /*700px*/
     transition: height 0.3s ease-out;
 }
 
@@ -179,6 +164,7 @@ h2 {
     top: 90px;
     width: 220px;
     height: 500px;
+    background-color: white;
     border-radius: 3px;
     border: 1px solid #BFBFBF;
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
@@ -202,11 +188,6 @@ input#search_input {
     margin: 20px 10px 10px;
 }
 
-input.search_check {
-    width: 23px;
-    height: 23px;
-}
-
 input.radio {
     width: 23px;
     height: 23px;
@@ -226,11 +207,6 @@ p#askingfor {
 
 .radio-ul {
     margin-top: 0;
-}
-
-input.search_check:checked {
-    color: crimson;
-    border: crimson;
 }
 
 ul {
@@ -259,9 +235,10 @@ img {
 
 #visible {
     position: absolute;
-    top: 98px;
+    top: 88px;
     left: 280px;
     width: 20px;
+    cursor: pointer;
 }
 
 #li-log, #li-reg, #li-pro {
@@ -283,7 +260,7 @@ a#log {
     padding: 7px 10px;
     margin-right: -10px;
     color: black;
-    background-color: aliceblue;
+    background-color: white;
     border-radius: 3px;
     border: 1px solid #BFBFBF;
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
@@ -295,4 +272,79 @@ a#log {
     width: 100%;
     text-align: center;
     color: red;
+}
+
+.form-res {
+    width: 700px;
+    position: fixed;
+    top: 130px;
+    right: 250px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #BFBFBF;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+}
+
+.resume-form > label > span {
+    padding: 10px;
+}
+
+.prof-inf {
+    padding: 10px;
+    position: fixed;
+    top: 130px;
+    left: 250px;
+    border-radius: 3px;
+    border: 1px solid #BFBFBF;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+}
+
+.prof-inf > p {
+    margin-bottom: 20px;
+}
+
+.prof-inf > img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 180px;
+    height: 180px;
+    z-index: 10;
+    border-radius: 3px;
+}
+
+.inp-num {
+    width: 150px;
+}
+
+select {
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 150px;
+    height: 30px;
+    border-radius: 2px;
+    border: solid #656564 1px;
+    font-size: 16px;
+    outline: 0;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.05);
+}
+
+select:focus {
+    border-color: crimson;
+}
+
+option {
+    width: 10px;
+}
+
+#h-prof {
+    top: 80px;
+}
+
+#bug {
+    position: relative;
+    top: -7px;
 }

@@ -3,8 +3,7 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Регистрация
-        link(href='/assets/styles.css', rel='stylesheet')
-        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+        include links
     body
         include header
         h1#form_h Регистрация
@@ -18,8 +17,8 @@ html(lang='en')
             .pass_container
                 label#pass_label(for='pass') Пароль:
                 br
-                input#pass(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}',
+                input#pass(type='password', name='password', pattern='(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}',
                 title="8-32 латинских буквы(минимум одна заглавная и одна строчная) и цифры", placeholder='qwerty', required=true)
-                #visible @
+                img#visible(src="/assets/visible.svg")
             button#submit(type='submit') Подтвердить!
         script(src='/assets/script.js')

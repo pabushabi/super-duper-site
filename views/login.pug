@@ -3,8 +3,7 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Вход
-        link(href='/assets/styles.css', rel='stylesheet')
-        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+        include links
     body
         include header
         h1#form_h Вход в аккаунт
@@ -20,9 +19,9 @@ html(lang='en')
                 br
                 input#pass(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}',
                 title="8-32 латинских буквы(минимум одна заглавная и одна строчная) и цифры", placeholder='qwerty', required=true)
-                #visible @
+                img#visible(src="/assets/visible.svg")
             button#submit(type='submit') Подтвердить!
 
         if errorCode !== ""
-            p#errCode Ошибка: #{errorCode} //printing login error
+            p#errCode Ошибка: #{errorCode}
         script(src='/assets/script.js')

@@ -3,43 +3,42 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Shadowswall
-        link(href='/assets/styles.css', rel='stylesheet')
-        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+        include links
     body
         include header
         a#profile(href='/profile') Ваш профиль #{user}
         a#err(href='/404') 404
 
+        #main
+            .search_bar
+                form.search_form(method="post", action="/", name="search")
+                    label#search_label(for="search_input") Поиск
+                    input#search_input(type="search", name="search_req")
+                    p#askingfor Я ищу:
+                    ul.radio-ul(type="none")
+                        li.radio-li
+                            input.radio#r1(name="radio-type", value="1", type="radio", checked="true")
+                            label.label_radio(for="r1") Работу
+                        li.radio-li
+                            input.radio#r2(name="radio-type", value="2", type="radio")
+                            label.label_radio(for="r2") Работника
 
-        .search_bar
-            form.search_form(method="", action="")
-                label#search_label(for="search_input") Поиск
-                input#search_input(type="search", name="search req")
-                p#askingfor Я ищу:
-                ul.radio-ul(type="none")
-                    li.radio-li
-                        input.radio#r1(name="radio-type", type="radio", checked="true")
-                        label.label_radio(for="r1") Работу
-                    li.radio-li
-                        input.radio#r2(name="radio-type", type="radio")
-                        label.label_radio(for="r2") Работника
-
-                ul(type="none")
-                    li
-                        input.search_check#c1(type="checkbox")
-                        label.label_check(for="c1") Высшее образование
-                    li
-                        input.search_check#c2(type="checkbox")
-                        label.label_check(for="c2") Удалённая работа
-                    li
-                        input.search_check#c3(type="checkbox")
-                        label.label_check(for="c3") Полный день
-                    li
-                        input.search_check#c4(type="checkbox")
-                        label.label_check(for="c4") Белиберда
+                    ul(type="none")
+                        li
+                            input.radio#c1(type="checkbox", value="1", name="check_")
+                            label.label_check(for="c1") Высшее образование
+                        li
+                            input.radio#c2(type="checkbox", value="2", name="check_")
+                            label.label_check(for="c2") Удалённая работа
+                        li
+                            input.radio#c3(type="checkbox", value="3", name="check_")
+                            label.label_check(for="c3") Полный день
+                        li
+                            input.radio#c4(type="checkbox", value="4", name="check_")
+                            label.label_check(for="c4") Белиберда
 
 
-        #section
+            #section
 
 
         script(src='/assets/script.js')

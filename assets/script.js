@@ -50,11 +50,29 @@ if (document.getElementById('visible') !== null){
     vis.addEventListener('click', () => {
         if (pass_inp.type === "password") {
             pass_inp.type = "text";
-            vis.innerHTML = '#';
+            vis.src = "/assets/invisible.svg";
         } else {
             pass_inp.type = "password";
-            vis.innerHTML = '@';
+            vis.src = "/assets/visible.svg";
         }
-
     });
+}
+
+if (document.getElementById('search_label') !== null) {
+    let search_form = document.getElementsByClassName('search_form');
+    search_form[0].addEventListener('change', () => {
+        let sform = document.forms["search"];
+        let inp = sform.elements["search_req"].value;
+        let rad = sform.elements["radio-type"].value;
+        let ch = sform.elements["check_"].value;
+        let req = JSON.stringify({search_req: inp, radio: rad, check: ch});
+        console.log(req);
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.addEventListener("load", () => {
+            console.log(xhr.response);
+        });
+        xhr.send(req);
+    })
 }

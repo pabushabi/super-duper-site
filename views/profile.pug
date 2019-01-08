@@ -1,15 +1,51 @@
 doctype html
 html(lang="en")
     head
+        meta(charset='UTF-8')
         title #{current}
-        link(href='/assets/styles.css', rel='stylesheet')
-        link(href='https://fonts.googleapis.com/css?family=Roboto:300', rel='stylesheet')
+        include links
     body
         include header
-        p#hello Привет, #{current}
-        p#yourma Ваша электронная почта: #{data.login}
-        p#yourpa Ваш пароль: #{data.password}
+        h1#h-prof Profile
+        .prof-inf
+            img(src="/assets/account.svg")
+            p#hello Привет, #{current}
+            p#yourma Ваша почта: #{data.login}
+            p#yourpa Ваш пароль: #{data.password}
 
-        a(href='/', id='back/') Назад на главную
+        .form-res
+            form.resume-form(action='', method='post')
+                label
+                    span Фамилия:
+                    input(type='text')
+                br
+                label
+                    span Имя:
+                    input(type='text')
+                br
+                label
+                    span Дата рождения:
+                    input.inp-num(type='date')
+                br
+                label
+                    span#bug Высшее образование
+                    input.radio(type='checkbox')
+                br
+                label
+                    span Стаж работы:
+                    input.inp-num(type='number' min="0" max="50")
+                br
+                label
+                    span Специальность:
+                    select#select-spec(name='select-spec', style='width: 150px; height: 33px')
+                        option(value='', style='background-color: lightgray') Programmer
+                        option(value='') Ingineer
+                        option(value='', style='background-color: lightgray') Photographer
+                        option(value='') Artist
+                        option(value='', style='background-color: lightgray') Scientist
+                br
+                label
+                    span Прогресс заполнения резюме:
+                    progress(max='100', value='1')
 
         script(src='/assets/script.js')

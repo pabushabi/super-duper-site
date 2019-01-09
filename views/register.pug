@@ -21,4 +21,7 @@ html(lang='en')
                 title="8-32 латинских буквы(минимум одна заглавная и одна строчная) и цифры", placeholder='qwerty', required=true)
                 img#visible(src="/assets/visible.svg")
             button#submit(type='submit') Подтвердить!
+
+        if errorCode !== ""
+            p#errCode #{errorCode}
         script(src='/assets/script.js')

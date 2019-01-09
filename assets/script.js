@@ -1,7 +1,7 @@
 'use strict';
 let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-if (document.getElementById('section') !== null) { //if this element is exsisting
+if (document.getElementById('section') != null) { //if this element is exsisting
     (() => {
         let section = document.getElementById('section');
         for (let i = 0; i < 20; i++) {
@@ -44,7 +44,7 @@ if (document.getElementById('section') !== null) { //if this element is exsistin
     });
 }
 
-if (document.getElementById('visible') !== null){
+if (document.getElementById('visible') != null){
     let vis = document.getElementById('visible');
     let pass_inp = document.getElementById('pass');
     vis.addEventListener('click', () => {
@@ -58,7 +58,7 @@ if (document.getElementById('visible') !== null){
     });
 }
 
-if (document.getElementById('search_label') !== null) {
+if (document.getElementById('search_label') != null) {
     let search_form = document.getElementsByClassName('search_form');
     search_form[0].addEventListener('change', () => {
         let sform = document.forms["search"];
@@ -75,4 +75,12 @@ if (document.getElementById('search_label') !== null) {
         });
         xhr.send(req);
     })
+}
+
+if (document.getElementsByClassName("form-res")[0] != null) {
+    let progress = document.getElementById("res-progress");
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < 6; i++){
+        inputs[i].addEventListener("change", () => {progress.value += 12.5});
+    }
 }

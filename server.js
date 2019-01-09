@@ -18,6 +18,17 @@ let usersData = {
     password: ""
 };
 
+db.none("CREATE TABLE IF NOT EXISTS accounts(\n" +
+    "pid serial primary key, \n" +
+    "login text unique not null,\n" +
+    "pass text not null)")
+    .then(() => {
+        console.log("Table created or already present")
+    })
+    .catch((err) => {
+        console.log("Table wasnt created", err)
+    });
+
 app.get('/', (req, res) => {
     if (currentUser[0] === "")
         res.render('index');
@@ -35,20 +46,20 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', urlencodedParser, (req, res) => {
-    currentUser = req.body.login;
-    usersData['login'] = req.body.login;
-    usersData['password'] = req.body.password;
-    let ni = currentUser.indexOf('@');
-    currentUser = currentUser.substring(0, ni);
-
-    db.one("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, req.body.password])
+    db.none("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, req.body.password])
         .then(() => {
-            console.log("account added");
+            console.log("Account created");
+            currentUser = req.body.login;
+            usersData['login'] = req.body.login;
+            usersData['password'] = req.body.password;
+            let ni = currentUser.indexOf('@');
+            currentUser = currentUser.substring(0, ni);
+            res.render('profile', {data: req.body, current: currentUser});
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log("Account wasnt created", err);
+            res.render('register', {errorCode: "Невозможно зарегестрироваться, возможно такой аккаунт уже существует!"})
         });
-
-    res.render('profile', {data: req.body, current: currentUser});
     console.log(req.body);
     console.log(usersData)
 });
@@ -80,10 +91,6 @@ app.get('/profile', (req, res) => {
     if (currentUser === "") res.redirect('/404');
     else
         res.render('profile', {data: usersData, current: currentUser});
-});
-
-app.get('/resume', (req, res) => {
-    res.render('resume')
 });
 
 

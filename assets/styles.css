@@ -95,7 +95,7 @@ button#submit {
     outline: 0;
 }
 
-button#submit:focus {
+button#submit:focus, a#log:focus {
     box-shadow: 0 3px 2px rgba(27, 31, 35, 0.15), inset 3px 3px 5px rgba(27, 31, 35, 0.3);
 }
 
@@ -117,7 +117,7 @@ input::placeholder {
     color: #999999;
 }
 
-input:focus {
+input:focus, .resume-form > label > textarea:focus {
     border-color: crimson;
 }
 
@@ -263,7 +263,7 @@ a#log {
     background-color: #f8f8f8;
     border-radius: 3px;
     border: 1px solid #BFBFBF;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
 }
 
 #errCode {
@@ -276,9 +276,10 @@ a#log {
 
 .form-res {
     width: 700px;
-    position: fixed;
+    position: absolute;
     top: 130px;
     right: 250px;
+    margin-bottom: 50px;
     padding: 10px;
     background-color: white;
     border-radius: 3px;
@@ -288,6 +289,25 @@ a#log {
 
 .resume-form > label > span {
     padding: 10px;
+}
+
+.resume-form > label > textarea {
+    width: 650px;
+    height: 250px;
+    border-radius: 3px;
+    border: 1px solid #656564;
+    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+    margin: 10px;
+    font-size: 16px;
+    outline: 0;
+    padding: 8px;
+}
+
+.resume-form > #submit {
+    margin: 0;
+    position: relative;
+    top: -3px;
+    left: 500px;
 }
 
 .prof-inf {
@@ -337,11 +357,16 @@ select:focus {
 }
 
 option {
-    width: 10px;
+    background-color: #f2f2f2;
+}
+
+select :nth-child(2n) {
+    background-color: #fff;
 }
 
 #h-prof {
     top: 80px;
+    position: absolute;
 }
 
 #bug {

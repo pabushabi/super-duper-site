@@ -14,30 +14,30 @@ html(lang="en")
             p#yourpa Ваш пароль: #{data.password}
 
         .form-res
-            form.resume-form(action='', method='post')
-                label
-                    span Фамилия:
-                    input(type='text' maxlength=19 required=true placeholder="Джон")
-                br
+            form.resume-form(action='' method='post' name="Resume")
                 label
                     span Имя:
-                    input(type='text' maxlength=10 required=true placeholder="Иванов")
+                    input(type='text' name="Name" maxlength=19 required=true placeholder="Иван")
+                br
+                label
+                    span Фамилия:
+                    input(type='text' name="SecondName" maxlength=10 required=true placeholder="Иванов")
                 br
                 label
                     span Дата рождения:
-                    input.inp-num(type='date' required=true)
+                    input.inp-num(type='date' name="Birthdate" required=true)
                 br
                 label
                     span#bug Высшее образование
-                    input.radio(type='checkbox')
+                    input.radio(type='checkbox' name="Education")
                 br
                 label
                     span Стаж работы:
-                    input.inp-num(type='number' min="0" max="50" value="0" required=true)
+                    input.inp-num(type='number' min="0" max="50" value="0" name="Experience" required=true)
                 br
                 label
-                    span Специальность:
-                    select#select-spec(name='select-spec', style='width: 150px; height: 33px' required=true)
+                    span Специализация:
+                    select#select-spec(name='Specialization', style='width: 150px; height: 33px' required=true)
                         option(value='') Programmer
                         option(value='') Ingineer
                         option(value='') Photographer
@@ -46,19 +46,28 @@ html(lang="en")
                 br
                 label
                     span Телефон:
-                    input(type="tel" name="phone" pattern="\\+[0-9]{1,3}\\([0-9]{3,4}\\)[0-9]{3}-[0-9]{4}" maxlength=19
+                    input(type="tel" name="Phone" pattern="\\+[0-9]{1,3}\\([0-9]{3,4}\\)[0-9]{3}-[0-9]{4}" maxlength=19
                     placeholder="+1(999)999-9999")
                 br
                 label
                     span Предпочитаемый режим работы:
-                    select#time-mode(name='time-mode', style='width: 200px; height: 33px' required=true)
+                    select#time-mode(name='Time-mode', style='width: 200px; height: 33px' required=true)
                         option(value='') Полный день
                         option(value='') Частичная занятость
                         option(value='') Плавающий график
                         option(value='') Удалённая работа
                 br
                 label
-                    span Прогресс заполнения резюме:
-                    progress#res-progress(max='100', value='1')
+                    span Желаемая зароботная плата:
+                    input.inp-num(type='number' min="0" max="9000000" value="0" step="1000" name="Pay-b" required=true)
+                    span -
+                    input.inp-num(type='number' min="0" max="9000000" value="0" step="1000" name="Pay-t" required=true)
+                br
+                label
+                    span О себе:
+                    textarea(name="About")
+                br
+                button#submit(type="button" onclick="resume_submit()") Сохранить
+
 
         script(src='/assets/script.js')

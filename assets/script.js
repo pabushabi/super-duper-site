@@ -76,11 +76,25 @@ if (document.getElementById('search_label') != null) {
         xhr.send(req);
     })
 }
+function resume_submit() {
+    let resume = document.forms["Resume"];
+    let name = resume.elements["Name"].value;
+    let secondName = resume.elements["SecondName"].value;
+    let birthdate = resume.elements["Birthdate"].value;
+    let education = resume.elements["Education"].value;
+    let experience = resume.elements["Experience"].value;
+    let specialization = resume.elements["Specialization"].value;
+    let phone = resume.elements["Phone"].value;
+    let time_mode = resume.elements["Time-mode"].value;
+    let pay_b = resume.elements["Pay-b"].value;
+    let pay_t = resume.elements["Pay-t"].value;
+    let about = resume.elements["About"].value;
 
-if (document.getElementsByClassName("form-res")[0] != null) {
-    let progress = document.getElementById("res-progress");
-    let inputs = document.getElementsByTagName("input");
-    for (let i = 0; i < 6; i++){
-        inputs[i].addEventListener("change", () => {progress.value += 12.5});
-    }
+    let profile = JSON.stringify({Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
+        Specialization: specialization, Phone: phone, Time: time_mode, Pay_b: pay_b, Pay_t: pay_t, About: about});
+    console.log(profile);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/profile",true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(profile);
 }

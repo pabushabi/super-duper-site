@@ -4,6 +4,8 @@ let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
 if (document.getElementById('section') != null) { //if this element is exsisting
     (() => {
         let section = document.getElementById('section');
+        if (document.documentElement.clientHeight > 760)
+            section.style.margin = "0 34% 0 9.5%";
         for (let i = 0; i < 20; i++) {
             let article = document.createElement("article");
             let h2 = document.createElement('h2');
@@ -11,6 +13,8 @@ if (document.getElementById('section') != null) { //if this element is exsisting
             let img = document.createElement('img');
             img.className = "arrows";
             img.src = '/assets/arrow.svg';
+            if (document.documentElement.clientHeight > 760)
+                img.style.top = "-120px";
             article.className = "art";
             article.id = i;
             h2.id = i;
@@ -42,6 +46,10 @@ if (document.getElementById('section') != null) { //if this element is exsisting
             }
         });
     });
+    let bar = document.getElementsByClassName("search_bar");
+    if (document.documentElement.clientHeight > 760)
+        bar[0].style.right = "20%";
+
 }
 
 if (document.getElementById('visible') != null){
@@ -97,4 +105,22 @@ function resume_submit() {
     xhr.open("POST", "/profile",true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(profile);
+}
+
+if (document.getElementsByClassName("form-res")[0] != null) {
+    let bar = document.getElementsByClassName("form-res");
+    let foo = document.getElementsByClassName("prof-inf");
+    if (document.documentElement.clientHeight > 760){
+        bar[0].style.right = "24%";
+        foo[0].style.left = "24%";
+    }
+}
+
+if (document.getElementById("alter") != null) {
+    if (document.documentElement.clientHeight > 760) {
+        document.getElementById("alter").style.top = "21%";
+        document.getElementById("alter").style.left = "8%";
+        document.getElementsByClassName("reg_form")[0].style.left = "43%";
+    }
+
 }

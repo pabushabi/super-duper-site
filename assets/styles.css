@@ -217,10 +217,10 @@ li {
     margin-top: 10px;
 }
 
-img {
+img.arrows {
     position: relative;
     top: -145px;
-    right: -660px;
+    right: -90%;
     width: 40px;
     height: 40px;
     z-index: 9;
@@ -235,7 +235,7 @@ img {
 
 #visible {
     position: absolute;
-    top: 88px;
+    top: 98px;
     left: 280px;
     width: 20px;
     cursor: pointer;
@@ -278,7 +278,7 @@ a#log {
     width: 700px;
     position: absolute;
     top: 130px;
-    right: 250px;
+    right: 17%;
     margin-bottom: 50px;
     padding: 10px;
     background-color: white;
@@ -314,7 +314,8 @@ a#log {
     padding: 10px;
     position: fixed;
     top: 130px;
-    left: 250px;
+    left: 17%;
+    background-color: white;
     border-radius: 3px;
     border: 1px solid #BFBFBF;
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);

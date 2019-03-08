@@ -10,6 +10,12 @@ const pgp = require('pg-promise')();
 const dbpath = require('./dbpath');
 const db = pgp(dbpath.path);  //replace 'dbpath.path' with 'postgres://username:password@localhost/dbname' or create dbpath.json file with this text
 const jsonParser = express.json();
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+// app.use(session({
+//
+// }));
+
 
 app.set('view engine', 'pug');
 let currentUser = "";
@@ -95,9 +101,12 @@ app.post('/login', urlencodedParser, (req, res) => {
                 usersData['login'] = req.body.login;
                 usersData['password'] = req.body.password;
                 currentUser = currentUser.substring(0, currentUser.indexOf('@'));
+                // document.cookie = "name=" + req.body.login;
+                // console.log(document.cookie);
                 res.redirect('profile');
                 console.log(req.body);
-                console.log(usersData)
+                console.log(usersData);
+
             }
         })
         .catch(() => {
@@ -113,6 +122,11 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/profile', jsonParser, (req, res) => {
+    // db.one("SELECT login FROM profile WHERE login = $1", document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1"))
+    //     .then((data) => {
+    //         if (data.login != null) console.log(1)
+    //     })
+    //     .catch((err) => {console.log(err)});
     console.log(req.body);
     db.none("INSERT INTO profile (login, first_name, second_name, birthdate, education, experience, specialization, phone, time_mode, pay_b, pay_t, about) " +
         "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [usersData.login, req.body.Name, req.body.Second, req.body.Birthdate,
@@ -122,6 +136,17 @@ app.post('/profile', jsonParser, (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+        })
+});
+
+app.put('/profile', (req, res) => {
+    console.log("+");
+    db.any("SELECT first_name, second_name, birthdate, education, experience, specialization, phone, time_mode, pay_b, pay_t, about " +
+        "FROM profile WHERE login = $1", usersData['login'])
+        .then((data) => {
+            console.log("+_+");
+            console.log(data);
+            res.send(data);
         })
 });
 

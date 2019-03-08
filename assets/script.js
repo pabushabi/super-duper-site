@@ -1,79 +1,79 @@
 'use strict';
 let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-if (document.getElementById('section') != null) { //if this element is exsisting
+if ($('#section') != null) { //adding articles
     (() => {
-        let section = document.getElementById('section');
         if (document.documentElement.clientHeight > 760)
-            section.style.margin = "0 34% 0 9.5%";
+            $('#section').css("margin", "0 34% 0 9.5%");
         for (let i = 0; i < 20; i++) {
-            let article = document.createElement("article");
-            let h2 = document.createElement('h2');
-            let p = document.createElement('p');
-            let img = document.createElement('img');
-            img.className = "arrows";
-            img.src = '/assets/arrow.svg';
+            let article = $("<article class='art'></article>");
+            let h2 = $('<h2></h2>');
+            let p = $('<p class="text"></p>');
+            let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
             if (document.documentElement.clientHeight > 760)
-                img.style.top = "-120px";
-            article.className = "art";
-            article.id = i;
-            h2.id = i;
-            p.id = i;
-            h2.innerHTML = 'Заголовок';
-            p.className = 'text';
-            section.appendChild(article);
-            article.appendChild(h2);
-            article.appendChild(p);
-            article.appendChild(img);
-            p.innerHTML = fish;
+                img.css("top","-120px");
+            article.attr("id", i);
+            h2.attr("id", i);
+            p.attr("id", i);
+            h2.html('Заголовок');
+            $('#section').append(article);
+            article.append(h2);
+            article.append(p);
+            article.append(img);
+            p.html(fish);
         }
     })();
 
-    let arrows = document.getElementsByClassName('arrows');
-    let article = document.getElementsByClassName("art");
+    let article = document.getElementsByClassName("art"); //creating animation of opening & closing
     [].forEach.call(article, (el) => {
         el.addEventListener("click", (e) => {
-            if (article[e.target.id].style.height === 220 + 'px') {
-                article[e.target.id].style.height = '80px';
-                article[e.target.id].style.border = '1px solid #BFBFBF';
-                arrows[e.target.id].style.transition = 'transform 0.4s';
-                arrows[e.target.id].style.transform = 'rotate(0deg)'
+            let art = $(".art");
+            if (art.eq(e.target.id).css("height") === '220px') {
+                art.eq(e.target.id).css({'height':'80px', 'border':'1px solid #BFBFBF'});
+                $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(0deg)'});
             } else {
-                article[e.target.id].style.height = '220px';
-                article[e.target.id].style.border = '1px solid crimson';
-                arrows[e.target.id].style.transition = 'transform 0.4s';
-                arrows[e.target.id].style.transform = 'rotate(180deg)'
+                art.eq(e.target.id).css({'height':'220px', 'border':'1px solid crimson'});
+                $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(180deg)'});
             }
         });
     });
-    let bar = document.getElementsByClassName("search_bar");
     if (document.documentElement.clientHeight > 760)
-        bar[0].style.right = "20%";
-
+        $(".bar").eq(0).css("rigth", "20%");
 }
 
-if (document.getElementById('visible') != null){
-    let vis = document.getElementById('visible');
+if ($("#alter") != null){
+    let alter = $("#alter");
     let pass_inp = document.getElementById('pass');
-    vis.addEventListener('click', () => {
-        if (pass_inp.type === "password") {
-            pass_inp.type = "text";
-            vis.src = "/assets/invisible.svg";
+    $("#visible").click(() => {
+        if ($("#pass").attr("type") === "password") {
+            $("#pass").attr("type", "text");
+            $("#visible").attr("src","/assets/invisible.svg");
         } else {
-            pass_inp.type = "password";
-            vis.src = "/assets/visible.svg";
+            $("#pass").attr("type", "password");
+            $("#visible").attr("src","/assets/visible.svg");
         }
     });
+    if (document.documentElement.clientHeight > 760) {
+        alter.css("top","21%");
+        alter.css("left","8%");
+        $(".reg_form").eq(0).css("left","43%");
+    }
 }
 
-if (document.getElementById('search_label') != null) {
-    let search_form = document.getElementsByClassName('search_form');
-    search_form[0].addEventListener('change', () => {
+if ($('#search_label') != null) {
+    let search_form = $('.search_form');
+    search_form.eq(0).on('change', () => {
         let sform = document.forms["search"];
         let inp = sform.elements["search_req"].value;
         let rad = sform.elements["radio-type"].value;
-        let ch = sform.elements["check_"].value;
-        let req = JSON.stringify({search_req: inp, radio: rad, check: ch});
+
+        let chechs = [];
+        for (let i = 1; i < 5; i++)
+            if (document.getElementById("c" + i).checked)
+                chechs[i-1] = i;
+
+        console.log(chechs);
+        let req = JSON.stringify({search_req: inp, radio: rad, check: chechs});
         console.log(req);
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "/", true);
@@ -85,18 +85,17 @@ if (document.getElementById('search_label') != null) {
     })
 }
 function resume_submit() {
-    let resume = document.forms["Resume"];
-    let name = resume.elements["Name"].value;
-    let secondName = resume.elements["SecondName"].value;
-    let birthdate = resume.elements["Birthdate"].value;
-    let education = resume.elements["Education"].value;
-    let experience = resume.elements["Experience"].value;
-    let specialization = resume.elements["Specialization"].value;
-    let phone = resume.elements["Phone"].value;
-    let time_mode = resume.elements["Time-mode"].value;
-    let pay_b = resume.elements["Pay-b"].value;
-    let pay_t = resume.elements["Pay-t"].value;
-    let about = resume.elements["About"].value;
+    let name = $("#i-name").val();
+    let secondName = $("#i-secname").val();
+    let birthdate = $("#i-date").val();
+    let education = $("#i-ed").prop("checked");
+    let experience = $("#i-ex").val();
+    let specialization = $("#select-spec").val();
+    let phone = $("#i-tel").val();
+    let time_mode = $("#time-mode").val();
+    let pay_b = $("#i-payb").val();
+    let pay_t = $("#i-payt").val();
+    let about = $("#i-about").val();
 
     let profile = JSON.stringify({Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
         Specialization: specialization, Phone: phone, Time: time_mode, Pay_b: pay_b, Pay_t: pay_t, About: about});
@@ -107,20 +106,48 @@ function resume_submit() {
     xhr.send(profile);
 }
 
-if (document.getElementsByClassName("form-res")[0] != null) {
-    let bar = document.getElementsByClassName("form-res");
-    let foo = document.getElementsByClassName("prof-inf");
+if ($(".form-res").eq(0) != null) {
     if (document.documentElement.clientHeight > 760){
-        bar[0].style.right = "24%";
-        foo[0].style.left = "24%";
+        $(".form-res").eq(0).css("right", "24%");
+        $(".prof-inf").eq(0).css("left", "24%");
     }
-}
 
-if (document.getElementById("alter") != null) {
-    if (document.documentElement.clientHeight > 760) {
-        document.getElementById("alter").style.top = "21%";
-        document.getElementById("alter").style.left = "8%";
-        document.getElementsByClassName("reg_form")[0].style.left = "43%";
-    }
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/profile", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
+    xhr.addEventListener("load", () => {
+        let res = xhr.response;
+        // let parsed = JSON.parse(res);
+        console.log(res);
+        // console.log(parsed[0]);
+
+        // console.log(parsed.split(","));
+        // $("#i-name").val(parsed[0]);
+        // $("#i-secname").val();
+        // $("#i-date").val();
+        // $("#i-ed").prop("checked");
+        // $("#i-ex").val();
+        // $("#select-spec").val();
+        // $("#i-tel").val();
+        // $("#time-mode").val();
+        // $("#i-payb").val();
+        // $("#i-payt").val();
+        // $("#i-about").val();
+    });
+
+    let resume = document.forms["Resume"];
+    let name = resume.elements["Name"];
+    let secondName = resume.elements["SecondName"];
+    let birthdate = resume.elements["Birthdate"];
+    let education = resume.elements["Education"];
+    let experience = resume.elements["Experience"];
+    let specialization = resume.elements["Specialization"];
+    let phone = resume.elements["Phone"];
+    let time_mode = resume.elements["Time-mode"];
+    let pay_b = resume.elements["Pay-b"];
+    let pay_t = resume.elements["Pay-t"];
+    let about = resume.elements["About"];
+
 
 }

@@ -10,12 +10,9 @@ const pgp = require('pg-promise')();
 const dbpath = require('./dbpath');
 const db = pgp(dbpath.path);  //replace 'dbpath.path' with 'postgres://username:password@localhost/dbname' or create dbpath.json file with this text
 const jsonParser = express.json();
+const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-// app.use(session({
-//
-// }));
-
 
 app.set('view engine', 'pug');
 let currentUser = "";
@@ -71,7 +68,12 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', urlencodedParser, (req, res) => {
-    db.none("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, req.body.password])
+    let password = req.body.password;
+    let hashedPass = crypto.createHmac('sha1', "123") //TODO: Сделать генерацию соли
+        .update(password)
+        .digest('hex');
+
+    db.none("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, hashedPass])
         .then(() => {
             console.log("Account created");
             currentUser = req.body.login;
@@ -94,22 +96,25 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', urlencodedParser, (req, res) => {
-    db.one("SELECT pid FROM accounts WHERE login = $1 and pass = $2", [req.body.login, req.body.password])
-        .then((data) => {
-            if (data.pid !== null) {
-                currentUser = req.body.login;
-                usersData['login'] = req.body.login;
-                usersData['password'] = req.body.password;
-                currentUser = currentUser.substring(0, currentUser.indexOf('@'));
-                // document.cookie = "name=" + req.body.login;
-                // console.log(document.cookie);
-                res.redirect('profile');
-                console.log(req.body);
-                console.log(usersData);
+    let password = req.body.password;
+    let hashedPass = crypto.createHmac('sha1', "123") //TODO: Сделать генерацию соли
+        .update(password)
+        .digest('hex');
 
-            }
+    db.one("SELECT pass FROM accounts WHERE login = $1", req.body.login)
+        .then((data) => {
+            let {pass} = data;
+            console.log(`password is ` + (hashedPass === pass));
+            currentUser = req.body.login;
+            usersData['login'] = req.body.login;
+            usersData['password'] = req.body.password;
+            currentUser = currentUser.substring(0, currentUser.indexOf('@')); //TODO: Сделать нормальные сессии
+            res.redirect('profile');
+            // console.log(req.body);
+            // console.log(usersData);
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err);
             res.render('login', {errorCode: "Неправильный логин и/или пароль!"})
         });
 });
@@ -132,7 +137,7 @@ app.post('/profile', jsonParser, (req, res) => {
         "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [usersData.login, req.body.Name, req.body.Second, req.body.Birthdate,
         req.body.Education, req.body.Experience, req.body.Specialization, req.body.Phone, req.body.Time, req.body.Pay_b, req.body.Pay_t, req.body.About])
         .then(() => {
-            res.redirect("profile")
+            res.redirect("profile");
         })
         .catch((err) => {
             console.log(err);
@@ -140,11 +145,9 @@ app.post('/profile', jsonParser, (req, res) => {
 });
 
 app.put('/profile', (req, res) => {
-    console.log("+");
     db.any("SELECT first_name, second_name, birthdate, education, experience, specialization, phone, time_mode, pay_b, pay_t, about " +
         "FROM profile WHERE login = $1", usersData['login'])
         .then((data) => {
-            console.log("+_+");
             console.log(data);
             res.send(data);
         })

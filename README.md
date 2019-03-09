@@ -1,3 +1,3 @@
 # SUPER-DUPER-SITE
 
-My site + server built on Pug + Css + Js & Node.js + Express & PostgreSQL
+My site + server built on Pug + Css + Js + jQuery & Node.js + Express & PostgreSQL

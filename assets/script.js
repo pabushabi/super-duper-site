@@ -1,7 +1,7 @@
 'use strict';
 let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-if ($('#section') != null) { //adding articles
+let _s = $("*");
+if (_s.is('#section') != null) { //adding articles
     (() => {
         if (document.documentElement.clientHeight > 760)
             $('#section').css("margin", "0 34% 0 9.5%");
@@ -41,7 +41,7 @@ if ($('#section') != null) { //adding articles
         $(".bar").eq(0).css("rigth", "20%");
 }
 
-if ($("#alter") != null){
+if (_s.is("#alter") !== false){
     let alter = $("#alter");
     let pass_inp = document.getElementById('pass');
     $("#visible").click(() => {
@@ -60,7 +60,7 @@ if ($("#alter") != null){
     }
 }
 
-if ($('#search_label') != null) {
+if (_s.is('#search_label') !== false) {
     let search_form = $('.search_form');
     search_form.eq(0).on('change', () => {
         let sform = document.forms["search"];
@@ -106,7 +106,7 @@ function resume_submit() {
     xhr.send(profile);
 }
 
-if ($(".form-res").eq(0) != null) {
+if (_s.is("#resume-form") !== false) {
     if (document.documentElement.clientHeight > 760){
         $(".form-res").eq(0).css("right", "24%");
         $(".prof-inf").eq(0).css("left", "24%");
@@ -118,36 +118,25 @@ if ($(".form-res").eq(0) != null) {
     xhr.send();
     xhr.addEventListener("load", () => {
         let res = xhr.response;
-        // let parsed = JSON.parse(res);
-        console.log(res);
-        // console.log(parsed[0]);
+        let parsed = JSON.parse(res);
+        let {first_name, second_name, birthdate, education, experience, specialization, phone,
+            time_mode, pay_b, pay_t, about} = parsed[0];                    //Это деструктуризация и она крута!
+        console.log(first_name, second_name, birthdate, education, experience, specialization,
+            phone, time_mode, pay_b, pay_t, about);
 
-        // console.log(parsed.split(","));
-        // $("#i-name").val(parsed[0]);
-        // $("#i-secname").val();
-        // $("#i-date").val();
-        // $("#i-ed").prop("checked");
-        // $("#i-ex").val();
-        // $("#select-spec").val();
-        // $("#i-tel").val();
-        // $("#time-mode").val();
-        // $("#i-payb").val();
-        // $("#i-payt").val();
-        // $("#i-about").val();
+        $("#i-name").val(first_name);
+        $("#i-secname").val(second_name);
+        $("#i-date").val(birthdate);
+        if (education === 'true')
+            $("#i-ed").prop("checked", 1);
+        else $("#i-ed").prop("checked", 0);
+        $("#i-ex").val(experience);
+        $("#select-spec").val(specialization);
+        $("#i-tel").val(phone);
+        $("#time-mode").val(time_mode);
+        $("#i-payb").val(pay_b);
+        $("#i-payt").val(pay_t);
+        $("#i-about").val(about);
     });
-
-    let resume = document.forms["Resume"];
-    let name = resume.elements["Name"];
-    let secondName = resume.elements["SecondName"];
-    let birthdate = resume.elements["Birthdate"];
-    let education = resume.elements["Education"];
-    let experience = resume.elements["Experience"];
-    let specialization = resume.elements["Specialization"];
-    let phone = resume.elements["Phone"];
-    let time_mode = resume.elements["Time-mode"];
-    let pay_b = resume.elements["Pay-b"];
-    let pay_t = resume.elements["Pay-t"];
-    let about = resume.elements["About"];
-
 
 }

@@ -14,7 +14,7 @@ html(lang="en")
             p#yourpa Ваш пароль: #{data.password}
 
         .form-res
-            form.resume-form(action='' method='post' name="Resume")
+            form.resume-form#resume-form(action='' method='post' name="Resume")
                 label
                     span Имя:
                     input#i-name(type='text' name="Name" maxlength=19 required=true placeholder="Иван")

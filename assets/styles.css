@@ -26,7 +26,7 @@ header {
 a.logo {
     position: relative;
     top: 14%;
-    margin-left: 5%;
+    margin-left: 17%;
     font-weight: lighter;
     color: #fff;
     font-size: xx-large;
@@ -93,6 +93,7 @@ button#submit {
     border: 0;
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
     outline: 0;
+    animation-duration: 1s;
 }
 
 button#submit:focus, a#log:focus {
@@ -129,7 +130,7 @@ input:focus, .resume-form > label > textarea:focus {
 #section {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 34% 0 6%;
+    margin: 0 34% 0 6.35%;
     top: 80px;
     position: absolute;
 }
@@ -230,7 +231,7 @@ img.arrows {
     position: fixed;
     top: 0;
     right: 0;
-    margin: 20px 60px 20px 20px;
+    margin: 20px 17% 20px 20px;
 }
 
 #visible {
@@ -241,12 +242,17 @@ img.arrows {
     cursor: pointer;
 }
 
-#li-log, #li-reg, #li-pro {
+.log {
     display: inline;
-    margin-right: 30px;
+    margin-left: 30px;
 }
 
-#li-pro {
+.vis {
+    z-index: 1000;
+    display: inline;
+}
+
+.invis {
     display: none;
 }
 
@@ -372,4 +378,9 @@ select :nth-child(2n) {
 #bug {
     position: relative;
     top: -7px;
+}
+
+@keyframes changingColor {
+    0% {background-color: #7FCD51; color: #231f20}
+    100% {background-color: crimson; color: white}
 }

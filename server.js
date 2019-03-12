@@ -17,15 +17,14 @@ const session = require('cookie-session');
 
 app.set('view engine', 'pug');
 
-var expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 day
 app.use(session({
     name: 'session',
     keys: ['key1', 'key2'],
     cookie: {
         secure: true,
-        path: '/',
-        expires: expiryDate
-    }
+        path: '/'
+    },
+    maxAge: 7 * 24 * 60 * 60 * 1000
 }));
 
 db.none(`CREATE TABLE IF NOT EXISTS accounts(

@@ -28,6 +28,7 @@ if (_s.is('#section') != null) {
                 article.attr("id", i);
                 h2.attr("id", i);
                 p.attr("id", i);
+                img.attr("id", i);
                 h2.html(`${first_name} ${second_name}, ${specialization}`);
                 $('#section').append(article);
                 article.append(h2);
@@ -36,43 +37,48 @@ if (_s.is('#section') != null) {
                 let t = birthdate.indexOf('-');
                 let dateNow = new Date();
                 let age = dateNow.getFullYear() - birthdate.substring(0, t);
-                p.html(`${first_name} ${second_name}, специализация: ${specialization}, возраст: ${age} опыт работы: ${experience}, 
-                предпочитаемый режим работы: ${time_mode}, желаемая заработная плата: ${pay_b} - ${pay_t}.
-                Коротко о себе: ${about} ${fish}`);
+                p.html(`${first_name} ${second_name}, <br> Специализация: ${specialization},<br> Возраст: ${age} опыт работы: ${experience}, 
+                <br> Предпочитаемый режим работы: ${time_mode}, <br> Желаемая заработная плата: ${pay_b} - ${pay_t}.
+                <br> Коротко о себе: ${about}`);
                 // article.click(resize())
             }
         }
+        createAnim();
     });
     let data = JSON.stringify({need: "help"});
     xhr.send(data);
 
-    let article = document.getElementsByClassName("art"); //creating animation of opening & closing
-    [].forEach.call(article, (el) => {
-        el.addEventListener("click", (e) => {
-            let art = $(".art");
-            if (art.eq(e.target.id).css("height") === '220px') {
-                art.eq(e.target.id).css({'height':'80px', 'border':'1px solid #BFBFBF'});
-                $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(0deg)'});
-            } else {
-                document.getElementsByClassName("art")[e.target.id].style.height = "220px";
-                art.eq(e.target.id).css({'height':'220px', 'border':'1px solid var(--mainColor)'});
-                $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(180deg)'});
-            }
-        });
-    });
     if (document.documentElement.clientWidth > 1500)
         $(".bar").eq(0).css("rigth", "20%");
 }
 
+function createAnim() {
+    let art = $(".art");
+    let arrow = $(".arrows");
+    art.click((e) => {
+        if (art.eq(e.target.id).css("height") === '220px') {
+            art.eq(e.target.id).css({'height':'80px', 'border':'1px solid #BFBFBF'});
+            arrow.eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(0deg)'});
+        } else {
+            art.eq(e.target.id).css("height", "220px");
+            art.eq(e.target.id).css({'height':'220px', 'border':'1px solid var(--mainColor)'});
+            arrow.eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(180deg)'});
+        }
+    })
+
+}
+
 if (_s.is("#alter") !== false){
     let alter = $("#alter");
-    $("#visible").click(() => {
-        if ($("#pass").attr("type") === "password") {
-            $("#pass").attr("type", "text");
-            $("#visible").attr("src","/assets/invisible.svg");
+    let pass = $("#pass");
+    let visible = $("#visible");
+    visible.click(() => {
+        if (pass.attr("type") === "password") {
+            pass.attr("type", "text");
+            visible.attr("src","/assets/invisible.svg");
         } else {
-            $("#pass").attr("type", "password");
-            $("#visible").attr("src","/assets/visible.svg");
+            pass.attr("type", "password");
+            visible.attr("src","/assets/visible.svg");
         }
     });
     if (document.documentElement.clientWidth > 1500) {

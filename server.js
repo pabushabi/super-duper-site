@@ -68,6 +68,14 @@ app.post('/', jsonParser, (req, res) => {
     res.json(`${req.body.search_req}, ${req.body.radio}`)
 });
 
+app.put('/', jsonParser, (req, res) => {
+    db.any("SELECT * FROM profile")
+        .then((data) => {
+            res.json(data)
+        })
+        .catch();
+});
+
 app.get('/register', (req, res) => {
     res.render('register')
 });

@@ -3,25 +3,48 @@ let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
 let _s = $("*");
 
 if (_s.is('#section') != null) {
-    if (document.documentElement.clientHeight > 760)
-        $('#section').css("margin", "0 34% 0 9.5%");
-    for (let i = 0; i < 20; i++) {
-        let article = $("<article class='art'></article>");
-        let h2 = $('<h2></h2>');
-        let p = $('<p class="text"></p>');
-        let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
-        if (document.documentElement.clientHeight > 760)
-            img.css("top","-120px");
-        article.attr("id", i);
-        h2.attr("id", i);
-        p.attr("id", i);
-        h2.html('Заголовок');
-        $('#section').append(article);
-        article.append(h2);
-        article.append(p);
-        article.append(img);
-        p.html(fish);
-    }
+    if (document.documentElement.clientWidth > 1500)
+        $('#section').css("margin", "0 34% 0 16.3%");
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener("load", () => {
+        // console.log(xhr.response);
+        let parsed = JSON.parse(xhr.response);
+        if (parsed.length !== 0) {
+            for (let i = 0; i < parsed.length; i++)
+            {
+                let {
+                    login, first_name, second_name, birthdate, education, experience, specialization, phone,
+                    time_mode, pay_b, pay_t, about
+                } = parsed[i];
+                let article = $("<article class='art'></article>");
+                let h2 = $('<h2></h2>');
+                let p = $('<p class="text"></p>');
+                let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
+                if (document.documentElement.clientHeight > 760)
+                    img.css("top","-120px");
+                article.attr("id", i);
+                h2.attr("id", i);
+                p.attr("id", i);
+                h2.html(`${first_name} ${second_name}, ${specialization}`);
+                $('#section').append(article);
+                article.append(h2);
+                article.append(p);
+                article.append(img);
+                let t = birthdate.indexOf('-');
+                let dateNow = new Date();
+                let age = dateNow.getFullYear() - birthdate.substring(0, t);
+                p.html(`${first_name} ${second_name}, специализация: ${specialization}, возраст: ${age} опыт работы: ${experience}, 
+                предпочитаемый режим работы: ${time_mode}, желаемая заработная плата: ${pay_b} - ${pay_t}.
+                Коротко о себе: ${about} ${fish}`);
+                // article.click(resize())
+            }
+        }
+    });
+    let data = JSON.stringify({need: "help"});
+    xhr.send(data);
 
     let article = document.getElementsByClassName("art"); //creating animation of opening & closing
     [].forEach.call(article, (el) => {
@@ -31,18 +54,18 @@ if (_s.is('#section') != null) {
                 art.eq(e.target.id).css({'height':'80px', 'border':'1px solid #BFBFBF'});
                 $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(0deg)'});
             } else {
-                art.eq(e.target.id).css({'height':'220px', 'border':'1px solid crimson'});
+                document.getElementsByClassName("art")[e.target.id].style.height = "220px";
+                art.eq(e.target.id).css({'height':'220px', 'border':'1px solid var(--mainColor)'});
                 $(".arrows").eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(180deg)'});
             }
         });
     });
-    if (document.documentElement.clientHeight > 760)
+    if (document.documentElement.clientWidth > 1500)
         $(".bar").eq(0).css("rigth", "20%");
 }
 
 if (_s.is("#alter") !== false){
     let alter = $("#alter");
-    let pass_inp = document.getElementById('pass');
     $("#visible").click(() => {
         if ($("#pass").attr("type") === "password") {
             $("#pass").attr("type", "text");
@@ -52,7 +75,7 @@ if (_s.is("#alter") !== false){
             $("#visible").attr("src","/assets/visible.svg");
         }
     });
-    if (document.documentElement.clientHeight > 760) {
+    if (document.documentElement.clientWidth > 1500) {
         alter.css("top","21%");
         alter.css("left","8%");
         $(".reg_form").eq(0).css("left","43%");
@@ -108,7 +131,7 @@ function resume_submit() {
     submit.css({"backgroundColor": "#7FCD51", "color": "rgb(35, 31, 32)"});
 
     setTimeout(() => {
-        submit.css({"animation-name": "changingColor", "color": "white", "background-color": "crimson"});
+        submit.css({"animation-name": "changingColor", "color": "white", "background-color": "var(--mainColor)"});
         submit.html("Сохранить");
     }, 2000)
 }
@@ -116,7 +139,7 @@ function resume_submit() {
 if (_s.is("#resume-form") !== false) {
     $(".log").css("display", "none");
 
-    if (document.documentElement.clientHeight > 760){
+    if (document.documentElement.clientWidth > 1500){
         $(".form-res").eq(0).css("right", "24%");
         $(".prof-inf").eq(0).css("left", "24%");
     }

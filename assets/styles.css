@@ -1,12 +1,13 @@
 * {
     margin: 0;
     padding: 0;
+    --mainColor: #f26065;
 }
 
 html {
     font-family: 'Roboto', sans-serif;
-    /*background-color: #f8f8f9;*/
-    background-color: #f8f8f8;
+    /*background-color: #f8f8f8;*/
+    background-color: #fcfcfc;
 }
 
 ::selection {
@@ -18,7 +19,7 @@ header {
     top: 0;
     width: 100%;
     height: 60px;
-    background-color: crimson;
+    background-color: var(--mainColor);
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
     z-index: 10;
 }
@@ -86,7 +87,7 @@ button#submit {
     left: 60px;
     width: 150px;
     height: 30px;
-    background-color: crimson;
+    background-color: var(--mainColor);
     color: white;
     cursor: pointer;
     border-radius: 3px;
@@ -119,7 +120,7 @@ input::placeholder {
 }
 
 input:focus, .resume-form > label > textarea:focus {
-    border-color: crimson;
+    border-color: var(--mainColor);
 }
 
 #main {
@@ -130,8 +131,9 @@ input:focus, .resume-form > label > textarea:focus {
 #section {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 34% 0 6.35%;
+    margin: 0 34% 0 16.35%;
     top: 80px;
+    left: 0;
     position: absolute;
 }
 
@@ -220,7 +222,7 @@ li {
 
 img.arrows {
     position: relative;
-    top: -145px;
+    top: -175px;
     right: -90%;
     width: 40px;
     height: 40px;
@@ -247,6 +249,10 @@ img.arrows {
     margin-left: 30px;
 }
 
+.log:nth-child(3) {
+    margin-left: 0;
+}
+
 .vis {
     z-index: 1000;
     display: inline;
@@ -265,7 +271,7 @@ a#log, a#reg, a#pro {
 a#log {
     padding: 7px 10px;
     margin-right: -10px;
-    color: black;
+    color: #231f20;
     background-color: #f8f8f8;
     border-radius: 3px;
     box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
@@ -359,7 +365,7 @@ select {
 }
 
 select:focus {
-    border-color: crimson;
+    border-color: var(--mainColor);
 }
 
 option {
@@ -382,5 +388,5 @@ select :nth-child(2n) {
 
 @keyframes changingColor {
     0% {background-color: #7FCD51; color: #231f20}
-    100% {background-color: crimson; color: white}
+    100% {background-color: var(--mainColor); color: white}
 }

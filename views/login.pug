@@ -17,7 +17,7 @@ html(lang='en')
             .pass_container
                 label#pass_label(for='pass') Пароль:
                 br
-                input#pass(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}',
+                input#pass(type='password', name='password', pattern='(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}',
                 title="8-32 латинских буквы(минимум одна заглавная и одна строчная) и цифры", placeholder='qwerty', required=true)
                 img#visible(src="/assets/visible.svg")
             button#submit(type='submit') Подтвердить!

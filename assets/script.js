@@ -3,11 +3,14 @@ let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
 let _s = $("*");
 
 if (_s.is('#section') != null) {
-    if (document.documentElement.clientWidth > 1500)
+    if (document.documentElement.clientWidth > 1500){
         $('#section').css("margin", "0 34% 0 16.3%");
+        $(".bar").eq(0).css("rigth", "20%");
+    }
+
 
     let xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/", true);
+    xhr.open("POST", "/", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", () => {
         // console.log(xhr.response);
@@ -45,11 +48,8 @@ if (_s.is('#section') != null) {
         }
         createAnim();
     });
-    let data = JSON.stringify({need: "help"});
+    let data = JSON.stringify({type: "articles"});
     xhr.send(data);
-
-    if (document.documentElement.clientWidth > 1500)
-        $(".bar").eq(0).css("rigth", "20%");
 }
 
 function createAnim() {
@@ -100,7 +100,7 @@ if (_s.is('#search_label') !== false) {
             if (document.getElementById("c" + i).checked)
                 chechs[i-1] = i;
 
-        let req = JSON.stringify({search_req: inp, radio: rad, check: chechs});
+        let req = JSON.stringify({type: "search", search_req: inp, radio: rad, check: chechs});
         console.log(req);
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "/", true);
@@ -112,6 +112,9 @@ if (_s.is('#search_label') !== false) {
     })
 }
 function resume_submit() {
+    let changed = false;
+    $("#resume-form").change(() => {changed = true});
+
     let name = $("#i-name").val();
     let secondName = $("#i-secname").val();
     let birthdate = $("#i-date").val();
@@ -124,7 +127,7 @@ function resume_submit() {
     let pay_t = $("#i-payt").val();
     let about = $("#i-about").val();
 
-    let profile = JSON.stringify({Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
+    let profile = JSON.stringify({type: "add", Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
         Specialization: specialization, Phone: phone, Time: time_mode, Pay_b: pay_b, Pay_t: pay_t, About: about});
     console.log(profile);
     let xhr = new XMLHttpRequest();
@@ -151,9 +154,9 @@ if (_s.is("#resume-form") !== false) {
     }
 
     let xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/profile", true);
+    xhr.open("POST", "/profile", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send();
+    xhr.send(JSON.stringify({type: "get"}));
     xhr.addEventListener("load", () => {
         let res = xhr.response;
         let parsed = JSON.parse(res);

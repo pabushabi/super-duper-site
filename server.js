@@ -125,7 +125,7 @@ app.post('/login', urlencodedParser, (req, res) => {
             let {pass} = data;
             console.log(`${getTime()} password is ` + (hashedPass === pass));
             req.session.message = req.body.login;
-            console.log(req.session.message);
+            console.log(`${getTime()} ${req.session.message}`);
             res.redirect('profile');
         })
         .catch((err) => {
@@ -143,6 +143,11 @@ app.get('/profile', (req, res) => {
 
 app.post('/profile', jsonParser, (req, res) => {
     switch (req.body.type) {
+        case "exit": {
+            req.session = null;
+            res.send({msg: "logged out"});
+            break;
+        }
         case "add": {
             db.none("INSERT INTO profile (login, first_name, second_name, birthdate, education, experience, specialization, phone, time_mode, pay_b, pay_t, about) " +
                 "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [req.session.message, req.body.Name, req.body.Second, req.body.Birthdate,

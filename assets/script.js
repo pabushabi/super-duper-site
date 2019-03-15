@@ -112,9 +112,8 @@ if (_s.is('#search_label') !== false) {
     })
 }
 function resume_submit() {
-    let changed = false;
-    $("#resume-form").change(() => {changed = true});
-
+    // let changed = false;
+    // $("#resume-form").change(() => {changed = true});
     let name = $("#i-name").val();
     let secondName = $("#i-secname").val();
     let birthdate = $("#i-date").val();
@@ -130,19 +129,41 @@ function resume_submit() {
     let profile = JSON.stringify({type: "add", Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
         Specialization: specialization, Phone: phone, Time: time_mode, Pay_b: pay_b, Pay_t: pay_t, About: about});
     console.log(profile);
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/profile",true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(profile);
-    let submit = $("#submit");
-    submit.blur();
-    submit.html("Сохранено!");
-    submit.css({"backgroundColor": "#7FCD51", "color": "rgb(35, 31, 32)"});
+    // if (changed) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/profile",true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(profile);
 
-    setTimeout(() => {
-        submit.css({"animation-name": "changingColor", "color": "white", "background-color": "var(--mainColor)"});
-        submit.html("Сохранить");
-    }, 2000)
+        let submit = $("#submit");
+        submit.blur();
+        submit.html("Сохранено!");
+        submit.css({"backgroundColor": "#7FCD51", "color": "rgb(35, 31, 32)"});
+
+        setTimeout(() => {
+            submit.css({"animation-name": "changingColor", "color": "white", "background-color": "var(--mainColor)"});
+            submit.html("Сохранить");
+        }, 2000)
+    // }
+    // else {
+    //     let submit = $("#submit");
+    //     submit.blur();
+    //     submit.html("Нет изменений!");
+    //     setTimeout(() => {
+    //         submit.html("Сохранить");
+    //     }, 2000)
+    // }
+}
+
+function logout(){
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/profile", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({type: "exit"}));
+    xhr.addEventListener("load", () => {
+        console.log(xhr.response);
+        location.reload();
+    })
 }
 
 if (_s.is("#resume-form") !== false) {

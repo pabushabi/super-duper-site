@@ -174,6 +174,23 @@ if (_s.is("#resume-form") !== false) {
         $(".prof-inf").eq(0).css("left", "24%");
     }
 
+    let pay_b = $("#i-payb");
+    let pay_t = $("#i-payt");
+    pay_b.change(() => {
+        pay_t.prop("min", pay_b.val());
+        if (pay_t.val() * 1 < pay_b.val() * 1)
+            pay_t.val(pay_b.val())
+    });
+
+    let mth = new Date().getMonth() + 1;
+    if ((new Date().getMonth() + 1) < 10)
+        mth = "0" + mth;
+    let date = (new Date().getFullYear() - 14) + "-" + mth + "-" + new Date().getDate();
+    let dateOld = (new Date().getFullYear() - 110) + "-01-01";
+    let birthday = $("#i-date");
+    birthday.prop("max", date);
+    birthday.prop("min", dateOld);
+
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/profile", true);
     xhr.setRequestHeader("Content-Type", "application/json");

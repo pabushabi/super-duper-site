@@ -13,7 +13,9 @@ html(lang="en")
             p#yourma Ваша почта: #{login}
 
         .form-res
-            form.resume-form#resume-form(action='' method='post' name="Resume")
+            #change_back
+                p#change Вакансия
+            form.resume-form(action='' method='post' name="Resume")
                 label
                     span Имя:
                     input#i-name(type='text' name="Name" maxlength=19 required=true placeholder="Иван")
@@ -66,7 +68,61 @@ html(lang="en")
                     span О себе:
                     textarea#i-about(name="About" required=true placeholder="Коротко о себе")
                 br
+                span#error Все поля должны быть заполнены!
                 button#submit(type="button" onclick="resume_submit()") Сохранить
+
+
+            form.vac-form(action='' method='post' name="Vacancy")
+                label
+                    span Название организации:
+                    input#v-name(type='text' name="Name" maxlength=40 required=true placeholder="Рога и копыта")
+                br
+                label
+                    span Желаемый возраст:
+                    input.inp-num#v-date(type='number' name="Age" min="15" max="100" required=true placeholder="25")
+                br
+                label
+                    span#bug1 Высшее образование
+                    input.radio#v-ed(type='checkbox' name="Education", checked=false)
+                br
+                label
+                    span Желаемый стаж работы:
+                    input.inp-num#v-ex(type='number' min="0" max="70" name="Experience" required=true placeholder="10")
+                br
+                label
+                    span Желаемая специализация:
+                    select#select-vac(name='Specialization', style='width: 150px; height: 33px' required=true)
+                        option(value='Программист') Программист
+                        option(value='Инженер') Инженер
+                        option(value='Фотограф') Фотограф
+                        option(value='Артист') Артист
+                        option(value='Учёный') Учёный
+                br
+                label
+                    span Телефон:
+                    input#v-tel(type="tel" name="Phone" pattern="\\+[0-9]{1,3}\\([0-9]{3,4}\\)[0-9]{3}-[0-9]{4}" maxlength=19
+                    placeholder="+1(999)999-9999")
+                br
+                label
+                    span Предпочитаемый режим работы:
+                    select#time(name='Time-mode', style='width: 200px; height: 33px' required=true)
+                        option(value='Полный день') Полный день
+                        option(value='Частичная занятость') Частичная занятость
+                        option(value='Плавающий график') Плавающий график
+                        option(value='Удалённая работа') Удалённая работа
+                br
+                label
+                    span Желаемая зароботная плата:
+                    input.inp-num#v-payb(type='number' min="0" max="9000000" value="0" step="1000" name="Pay-b" required=true)
+                    span -
+                    input.inp-num#v-payt(type='number' min="0" max="9000000" value="0" step="1000" name="Pay-t" required=true)
+                br
+                label
+                    span Об организации (дополнительные требования):
+                    textarea#v-about(name="About" required=true placeholder="Коротко об организации")
+                br
+                span#error1 Все поля должны быть заполнены!
+                button#submit1(type="button" onclick="vac_submit()") Сохранить
 
         button#logout(type="button" onclick="logout()")
             span Выйти

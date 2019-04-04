@@ -2,12 +2,13 @@
     margin: 0;
     padding: 0;
     --mainColor: #f26065;
+    /*--mainColor: #6d78ff;*/
+    /*color: #7xxx0757a;*/
+    color: #231f20;
 }
 
 html {
     font-family: 'Roboto', sans-serif;
-    /*background-color: #f8f8f8;*/
-    background-color: #fcfcfc;
 }
 
 ::selection {
@@ -19,18 +20,23 @@ header {
     top: 0;
     width: 100%;
     height: 60px;
-    background-color: var(--mainColor);
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
+    background-color: white;
+    border-bottom: 1px rgba(27, 31, 35, 0.1) solid;
     z-index: 10;
 }
 
 a.logo {
     position: relative;
-    top: 14%;
+    top: 17%;
     margin-left: 17%;
-    font-weight: lighter;
-    color: #fff;
+    font-weight: bold;
+    /*color: var(--mainColor);*/
+    background: linear-gradient(75deg, var(--mainColor), #6d78ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
     font-size: xx-large;
+    outline: none;
 }
 
 h1 {
@@ -38,6 +44,7 @@ h1 {
     top: 170px;
     width: 100%;
     text-align: center;
+    color: #231f20;
 }
 
 a {
@@ -70,35 +77,42 @@ a#err {
     width: 100%;
 }
 
-#alter {
-    width: 100%;
-    text-align: center;
-    top: 28%;
-    left: 10%;
-}
-
 #email_label, #pass_label {
     font-size: larger;
 }
 
-button#submit {
+button#submit, #submit1 {
     position: relative;
     top: 15px;
     left: 60px;
     width: 150px;
     height: 30px;
-    background-color: var(--mainColor);
+    background: linear-gradient(75deg, var(--mainColor), #6d78ff);
     color: white;
     cursor: pointer;
     border-radius: 3px;
     border: 0;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
     outline: 0;
     animation-duration: 1s;
+    transition: background-color 0.4s;
 }
 
-button#submit:focus, a#log:focus, #logout:focus {
-    box-shadow: 0 3px 2px rgba(27, 31, 35, 0.15), inset 3px 3px 5px rgba(27, 31, 35, 0.3);
+button#submit:hover, #submit1:hover {
+    box-shadow: 3px 3px 12px rgba(27, 31, 35, 0.15);
+    /*background-color: rgba(242, 96, 101, 0.85);*/
+    background: linear-gradient(-75deg, var(--mainColor), #6d78ff);
+}
+
+#night-mode {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 input {
@@ -109,10 +123,9 @@ input {
     width: 250px;
     height: 30px;
     border-radius: 2px;
-    border: solid #656564 1px;
+    border: solid rgba(27, 31, 35, 0.45) 1px;
     font-size: 16px;
     outline: 0;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.05);
 }
 
 input::placeholder {
@@ -120,7 +133,7 @@ input::placeholder {
 }
 
 input:focus, .resume-form > label > textarea:focus {
-    border-color: var(--mainColor);
+    border-image: linear-gradient(75deg, var(--mainColor), #6d78ff) 1;
 }
 
 #main {
@@ -131,7 +144,7 @@ input:focus, .resume-form > label > textarea:focus {
 #section {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 34% 0 16.35%;
+    margin: 0 34% 100px 16.35%;
     top: 80px;
     left: 0;
     position: absolute;
@@ -140,37 +153,40 @@ input:focus, .resume-form > label > textarea:focus {
 .art {
     position: static;
     padding: 10px;
-    margin: 10px;
     background: #fff;
     flex-direction: row;
     flex: 1 1000px;
-    border-radius: 3px;
-    border: 1px solid #BFBFBF;
-    box-shadow: 0 3px 22px rgba(27, 31, 35, 0.15);
+    border-top: 1px solid rgba(27, 31, 35, 0.1);
+    border-image: none 1;
     cursor: pointer;
     overflow: hidden;
-    height: 80px; /*220px*/
+    height: 32px; /*220px*/
     width: 50%; /*700px*/
-    transition: height 0.3s ease-out;
+    transition: height 0.3s ease-out, box-shadow 0.15s ease-in;
+    color: #231f20;
+}
+
+.art:hover {
+    /*background-color: rgba(0, 0, 0, 0.01);*/
+    box-shadow: 3px 5px 22px rgba(27, 31, 35, 0.05);
+    z-index: 9;
 }
 
 h2 {
-    width: 50%;
-    padding-top: 5px;
+    width: 90%;
     padding-bottom: 10px;
-    margin: 0 0 0 20px;
+    color: #231f20;
+    font-weight: lighter;
 }
 
 .search_bar {
     position: fixed;
     right: 17%;
-    top: 90px;
+    top: 80px;
     width: 220px;
     height: 500px;
-    background-color: white;
-    border-radius: 3px;
-    border: 1px solid #BFBFBF;
-    box-shadow: 0 3px 22px rgba(27, 31, 35, 0.15);
+    background-color: rgba(0, 0, 0, 0.016);
+    border-top: 1px solid rgba(27, 31, 35, 0.15);
 }
 
 label#search_label {
@@ -178,6 +194,7 @@ label#search_label {
     position: relative;
     top: 10px;
     font-size: large;
+    color: #231f20;
 }
 
 label.label_check, label.label_radio {
@@ -222,7 +239,7 @@ li {
 
 img.arrows {
     position: relative;
-    top: -145px;
+    top: -178px;
     right: -90%;
     width: 40px;
     height: 40px;
@@ -265,7 +282,7 @@ img.arrows {
 a#log, a#reg, a#pro {
     position: relative;
     top: 1%;
-    color: white;
+    /*color: white;*/
 }
 
 a#log {
@@ -274,7 +291,11 @@ a#log {
     color: #231f20;
     background-color: #f8f8f8;
     border-radius: 3px;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
+    outline: none;
+}
+
+a#log:hover {
+    background-color: rgba(0, 0, 0, 0.06);
 }
 
 #errCode {
@@ -292,33 +313,53 @@ a#log {
     right: 17%;
     margin-bottom: 50px;
     padding: 10px;
-    background-color: white;
-    border-radius: 3px;
-    border: 1px solid #BFBFBF;
-    box-shadow: 0 3px 22px rgba(27, 31, 35, 0.15);
+    background-color: rgba(0, 0, 0, 0.016);
+    border-top: 1px solid #BFBFBF;
 }
 
-.resume-form > label > span {
+#change_back {
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    right: 2%;
+    top: 1%;
+    border-radius: 4px;
+}
+
+#change {
+    font-size: large;
+    background: linear-gradient(75deg, var(--mainColor), #6d78ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#change_back:hover {
+    background-color: rgba(0, 0, 0, .025);
+}
+
+.resume-form > label > span, .vac-form > label > span {
     padding: 10px;
 }
 
-.resume-form > label > textarea {
+.resume-form > label > textarea, .vac-form > label > textarea {
     width: 650px;
     height: 250px;
     border-radius: 3px;
-    border: 1px solid #656564;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
     margin: 10px;
     font-size: 16px;
     outline: 0;
     padding: 8px;
 }
 
-.resume-form > #submit {
+.resume-form > #submit, .vac-form > #submit1 {
     margin: 0;
     position: relative;
     top: -3px;
     left: 500px;
+}
+
+.vac-form {
+    display: none;
 }
 
 .prof-inf {
@@ -326,10 +367,8 @@ a#log {
     position: fixed;
     top: 130px;
     left: 17%;
-    background-color: white;
-    border-radius: 3px;
-    border: 1px solid #BFBFBF;
-    box-shadow: 0 3px 22px rgba(27, 31, 35, 0.15);
+    background-color: rgba(0, 0, 0, 0.016);
+    border-top: 1px solid #BFBFBF;
 }
 
 .prof-inf > p {
@@ -358,22 +397,18 @@ select {
     width: 150px;
     height: 30px;
     border-radius: 2px;
-    border: solid #656564 1px;
     font-size: 16px;
     outline: 0;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.05);
 }
 
 select:focus {
-    border-color: var(--mainColor);
+    /*border-color: var(--mainColor);*/
+    border-image: linear-gradient(75deg, var(--mainColor), #6d78ff) 1;
 }
 
-option {
-    background-color: #f2f2f2;
-}
 
 select :nth-child(2n) {
-    background-color: #fff;
+    background-color: #f2f2f2;
 }
 
 #h-prof {
@@ -381,14 +416,9 @@ select :nth-child(2n) {
     position: absolute;
 }
 
-#bug {
+#bug, #bug1 {
     position: relative;
     top: -7px;
-}
-
-@keyframes changingColor {
-    0% {background-color: #7FCD51; color: #231f20}
-    100% {background-color: var(--mainColor); color: white}
 }
 
 #logout {
@@ -399,7 +429,7 @@ select :nth-child(2n) {
     color: #231f20;
     background-color: #f8f8f8;
     border-radius: 3px;
-    box-shadow: 0 3px 12px rgba(27, 31, 35, 0.35);
+    /*box-shadow: 3px 3px 12px rgba(27, 31, 35, 0.35);*/
     border: 0;
     font-size: 16px;
     outline: 0;
@@ -407,7 +437,19 @@ select :nth-child(2n) {
     cursor: pointer;
 }
 
+#logout:hover {
+    /*box-shadow: 3px 3px 12px rgba(27, 31, 35, 0.35);*/
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 #logout > span {
     position: relative;
     top: -7px;
+}
+
+#error, #error1 {
+    color: red;
+    position: absolute;
+    left: 15vw;
+    display: none;
 }

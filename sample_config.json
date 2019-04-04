@@ -1,0 +1,6 @@
+{
+  "path": "postgres://logn:pass@127.0.0.1/tableName",
+  "cookieKey1": "SecureKeyNumberOne",
+  "cookieKey2": "SecureKeyNumberTwo",
+  "passKey": "Key"
+}

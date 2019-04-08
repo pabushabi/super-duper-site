@@ -453,3 +453,12 @@ select :nth-child(2n) {
     left: 15vw;
     display: none;
 }
+
+#error-art {
+    color: red;
+    position: fixed;
+    top: 100px;
+    left: 20%;
+    font-size: large;
+    visibility: hidden;
+}

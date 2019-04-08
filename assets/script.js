@@ -1,6 +1,70 @@
 'use strict';
-let fish = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 let _s = $("*");
+
+function createArt(h2body, i, bodyText) {
+    let article = $("<article class='art'></article>");
+    let h2 = $('<h2></h2>');
+    let p = $('<p class="text"></p>');
+    let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
+    if (document.documentElement.clientHeight > 760)
+        img.css("top","-120px");
+    article.attr("id", i);
+    h2.attr("id", i);
+    p.attr("id", i);
+    img.attr("id", i);
+    h2.html(h2body);
+    p.html(bodyText);
+    $('#section').append(article);
+    article.append(h2);
+    article.append(p);
+    article.append(img);
+}
+
+function addRes(da1) {
+    if (da1.length !== 0) {
+        for (let i = 0; i < da1.length; i++) {
+            let {
+                first_name, second_name, birthdate, education, experience, specialization, phone,
+                time_mode, pay_b, pay_t, about
+            } = da1[i];
+            let age = new Date().getFullYear() - birthdate.substring(0, birthdate.indexOf('-'));
+            let educ = (education === "true") ? "Да" : "Нет";
+            let bobyText = `${first_name} ${second_name}, <br> Специализация: <b id="${i}">${specialization}</b>,
+                <br> Возраст: ${age}, Опыт работы: <b id="${i}">${experience}</b>,
+                <br> Высшее образование: ${educ} 
+                <br> Предпочитаемый режим работы: ${time_mode}, 
+                <br> Желаемая заработная плата: <b id="${i}">${pay_b}р - ${pay_t}р</b>.
+                <br> Коротко о себе: ${about}`;
+            createArt(`${first_name} ${second_name}, ${specialization}`, i, bobyText);
+        }
+    }
+    createAnim();
+}
+
+function addVac(da1, da2) {
+    let len;
+    // try { len = da1.length }
+    // catch { len = 0 }
+    if (da2.length !== 0) {
+        for (let i = da1.length; i < da2.length + da1.length; i++)
+        {
+            let {
+                name, age, education, experience, specialization, phone,
+                time_mode, pay_b, pay_t, about
+            } = da2[i - da1.length];
+            let educ = (education === "true") ? "Да" : "Нет";
+            let bodyText = `Организация "${name}" ищет людей, удовлетворяющих требованиям:
+                <br> Специализация: <b id="${i}">${specialization}</b>,
+                <br> Возраст: ${age}, Опыт работы: <b id="${i}">${experience}</b>, 
+                <br> Высшее образование: ${educ}
+                <br> Предпочитаемый режим работы: ${time_mode}, 
+                <br> Предоставляемая заработная плата: <b id="${i}">${pay_b}р - ${pay_t}р</b>.
+                <br> Коротко о компании (дополнительные требования): ${about}`;
+            createArt(`Вакансия ${specialization} в "${name}"`, i, bodyText);
+        }
+    }
+    createAnim();
+}
 
 if (_s.is('#section') != null) {
     if (document.documentElement.clientWidth > 1500){
@@ -8,84 +72,16 @@ if (_s.is('#section') != null) {
         $(".bar").eq(0).css("rigth", "20%");
     }
 
-
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", () => {
-        let par = JSON.parse(xhr.response);
-        let {da1, da2} = par;
-        console.log(da1);
-        console.log(da2);
-        // let parsed = JSON.parse(da1);
-        console.log(da1[0], da2[0]);
-        if (da1.length !== 0) {
-            for (let i = 0; i < da1.length; i++)
-            {
-                let {
-                    login, first_name, second_name, birthdate, education, experience, specialization, phone,
-                    time_mode, pay_b, pay_t, about
-                } = da1[i];
-                let article = $("<article class='art'></article>");
-                let h2 = $('<h2></h2>');
-                let p = $('<p class="text"></p>');
-                let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
-                if (document.documentElement.clientHeight > 760)
-                    img.css("top","-120px");
-                article.attr("id", i);
-                h2.attr("id", i);
-                p.attr("id", i);
-                img.attr("id", i);
-                h2.html(`${first_name} ${second_name}, ${specialization}`);
-                $('#section').append(article);
-                article.append(h2);
-                article.append(p);
-                article.append(img);
-                let t = birthdate.indexOf('-');
-                let dateNow = new Date();
-                let age = dateNow.getFullYear() - birthdate.substring(0, t);
-                let educ = (education === "true") ? "Да" : "Нет";
-                p.html(`${first_name} ${second_name}, <br> Специализация: <b>${specialization}</b>,
-                <br> Возраст: ${age}, Опыт работы: <b>${experience}</b>,
-                <br> Высшее образование: ${educ} 
-                <br> Предпочитаемый режим работы: ${time_mode}, 
-                <br> Желаемая заработная плата: <b>${pay_b}р - ${pay_t}р</b>.
-                <br> Коротко о себе: ${about}`);
-            }
-        }
-        if (da2.length !== 0) {
-            for (let i = da1.length; i < da2.length + da1.length; i++)
-            {
-                let {
-                    login, name, age, education, experience, specialization, phone,
-                    time_mode, pay_b, pay_t, about
-                } = da2[i - da1.length];
-                let article = $("<article class='art'></article>");
-                let h2 = $('<h2></h2>');
-                let p = $('<p class="text"></p>');
-                let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
-                if (document.documentElement.clientHeight > 760)
-                    img.css("top","-120px");
-                article.attr("id", i);
-                h2.attr("id", i);
-                p.attr("id", i);
-                img.attr("id", i);
-                h2.html(`Вакансия ${specialization} в "${name}"`);
-                $('#section').append(article);
-                article.append(h2);
-                article.append(p);
-                article.append(img);
-                let educ = (education === "true") ? "Да" : "Нет";
-                p.html(`Организация "${name}" ищет людей, удовлетворяющих требованиям:
-                <br> Специализация: <b>${specialization}</b>,
-                <br> Возраст: ${age}, Опыт работы: <b>${experience}</b>, 
-                <br> Высшее образование: ${educ}
-                <br> Предпочитаемый режим работы: ${time_mode}, 
-                <br> Предоставляемая заработная плата: <b>${pay_b}р - ${pay_t}р</b>.
-                <br> Коротко о компании (дополнительные требования): ${about}`);
-            }
-        }
-        createAnim();
+        if (xhr.response === "" || xhr.response === undefined || xhr.response === null)
+            $("#error-art").css("visibility", "visible");
+        // console.log(xhr.response);
+        let {da1, da2} = JSON.parse(xhr.response);
+        addRes(da1);
+        addVac(da1, da2);
     });
     let data = JSON.stringify({type: "articles"});
     xhr.send(data);
@@ -143,6 +139,13 @@ if (_s.is('#search_label') !== false) {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.addEventListener("load", () => {
             // console.log(xhr.response);
+            $(".art").remove();
+            if (xhr.response === "" || xhr.response === undefined || xhr.response === null)
+                $("#error-art").css("visibility", "visible");
+            let {da1, da2} = JSON.parse(xhr.response);
+            addRes(da1);
+            
+            addVac(da1, da2);
         });
         xhr.send(req);
     })
@@ -167,7 +170,6 @@ function resume_submit() {
     }
     else { $("#error").css("display", "none") }
 
-
     let profile = JSON.stringify({
         type: "add", Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
         Specialization: specialization, Phone: phone, Time: time_mode, Pay_b: pay_b, Pay_t: pay_t, About: about
@@ -186,9 +188,8 @@ function resume_submit() {
             submit.html("Сохранить");
         }, 2000)
     });
-
-
 }
+
 function vac_submit() {
     let name = $("#v-name").val();
     let age = $("#v-date").val();
@@ -226,8 +227,6 @@ function vac_submit() {
             submit.html("Сохранить");
         }, 2000)
     });
-
-
 }
 
 function logout(){
@@ -248,19 +247,16 @@ if (_s.is(".resume-form") !== false) {
         $(".form-res").eq(0).css("right", "24%");
         $(".prof-inf").eq(0).css("left", "24%");
     }
-    let resF = true;
-    $("#change").click(() => {
+    $("#change_back").click(() => {
         if ($(".vac-form").css("display") === "none") {
             $("#change").html("Резюме");
             $(".vac-form").css("display", "block");
             $(".resume-form").css("display", "none");
-            resF = false;
         }
         else {
             $("#change").html("Вакансия");
             $(".vac-form").css("display", "none");
             $(".resume-form").css("display", "block");
-            resF = true;
         }
     });
 
@@ -298,9 +294,7 @@ if (_s.is(".resume-form") !== false) {
                 first_name, second_name, birthdate, education, experience, specialization, phone,
                 time_mode, pay_b, pay_t, about
             } = parsed[0];                    //Это деструктуризация и она крута!
-            console.log(first_name, second_name, birthdate, education, experience, specialization,
-                phone, time_mode, pay_b, pay_t, about);
-
+            $("#hello").html(`Привет, ${first_name}`);
             $("#i-name").val(first_name);
             $("#i-secname").val(second_name);
             $("#i-date").val(birthdate);
@@ -329,8 +323,6 @@ if (_s.is(".resume-form") !== false) {
                 name, age, education, experience, specialization, phone,
                 time_mode, pay_b, pay_t, about
             } = parsed[0];                    //Это деструктуризация и она крута!
-            console.log(name, age, education, experience, specialization,
-                phone, time_mode, pay_b, pay_t, about);
 
             $("#v-name").val(name);
             $("#v-date").val(age);
@@ -346,5 +338,4 @@ if (_s.is(".resume-form") !== false) {
             $("#v-about").val(about);
         }
     });
-
 }

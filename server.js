@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require('fs');
+// const fs = require('fs');
 const express = require('express');
 const app = express();
 const pug = require('pug');
@@ -89,26 +89,118 @@ app.post('/', jsonParser, (req, res) => {
     switch (req.body.type) {
         case "articles": {
             let da1, da2;
+            let flag1 = false, flag2 = false;
             db.any("SELECT * FROM profile")
                 .then((data) => {
                     da1 = data;
+                    flag1 = true;
+                    if (flag2)
+                        res.json({da1, da2});
                 })
-                .catch();
+                .catch(() => {
+                    res.json({da2})
+                });
             db.any("SELECT * FROM vacancy")
                 .then((data) => {
                     da2 = data;
+                    flag2 = true;
+                    if (flag1)
+                        res.json({da1, da2});
                 })
-                .catch();
-            setTimeout(() => {
-                // console.log({da1, da2});
-                res.json({da1, da2});
-            }, 100);
-
+                .catch(() => {
+                    res.json({da1})
+                });
             break;
         }
         case "search": {
-            console.log(req.body);
-            res.json(`${req.body.search_req}, ${req.body.radio}`);
+            let da1 = "", da2 = "";
+            let f1 = false, f2 = false, f3 = false, f4 = false, f5 = false, f6 = false;
+            if (req.body.radio === "2") {
+                let check = req.body.check.toString();
+                if (check === "")
+                    db.any("SELECT * FROM vacancy")
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[0] === 1)
+                    db.any("SELECT * FROM vacancy WHERE education = 'true'")
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[1] === 2)
+                    db.any("SELECT * FROM vacancy WHERE time_mode = 'Полный день'")
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[2] === 3)
+                    db.any("SELECT * FROM vacancy WHERE experience >= 10")
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[3] === 4)
+                    db.any("SELECT * FROM vacancy WHERE pay_b >= 30000")
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+            }
+            if (req.body.radio === "1") {
+                let check = req.body.check.toString();
+                if (check === "")
+                    db.any("SELECT * FROM profile")
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[0] === 1)
+                    db.any("SELECT * FROM profile WHERE education = 'true'")
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[1] === 2)
+                    db.any("SELECT * FROM profile WHERE time_mode = 'Полный день'")
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[2] === 3)
+                    db.any("SELECT * FROM profile WHERE experience >= 10")
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+                else if (req.body.check[3] === 4)
+                    db.any("SELECT * FROM profile WHERE pay_b >= 30000")
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(() => {
+                        });
+            }
             break;
         }
     }
@@ -120,7 +212,7 @@ app.get('/register', (req, res) => {
 
 app.post('/register', urlencodedParser, (req, res) => {
     let password = req.body.password;
-    let hashedPass = crypto.createHmac('sha1', config.passKey) //TODO: Сделать генерацию соли
+    let hashedPass = crypto.createHmac('sha1', config.passKey)
         .update(password)
         .digest('hex');
 
@@ -143,7 +235,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', urlencodedParser, (req, res) => {
     let password = req.body.password;
-    let hashedPass = crypto.createHmac('sha1', config.passKey) //TODO: Сделать генерацию соли
+    let hashedPass = crypto.createHmac('sha1', config.passKey)
         .update(password)
         .digest('hex');
 
@@ -170,7 +262,7 @@ app.post('/login', urlencodedParser, (req, res) => {
 app.get('/profile', (req, res) => {
     if (req.session.message === undefined) res.redirect('/404');
     else
-        res.render('profile', {login: req.session.message, current: req.session.message});
+        res.render('profile', {login: req.session.message});
 });
 
 app.post('/profile', jsonParser, (req, res) => {
@@ -271,4 +363,3 @@ const port = 200;
 app.listen(port, () => {
     console.log(`${getTime()} Server running at http://127.0.0.1:${port} (http://localhost:${port})`);
 });
-

@@ -162,6 +162,7 @@ input:focus, .resume-form > label > textarea:focus {
     overflow: hidden;
     height: 32px; /*220px*/
     width: 50%; /*700px*/
+    min-width: 710px;
     transition: height 0.3s ease-out, box-shadow 0.15s ease-in;
     color: #231f20;
 }

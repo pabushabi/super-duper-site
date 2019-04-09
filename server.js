@@ -114,92 +114,102 @@ app.post('/', jsonParser, (req, res) => {
         }
         case "search": {
             let da1 = "", da2 = "";
-            let f1 = false, f2 = false, f3 = false, f4 = false, f5 = false, f6 = false;
             if (req.body.radio === "2") {
                 let check = req.body.check.toString();
+                let search = req.body.search_req.toString();
+                if (req.body.search_req !== "")
+                    db.any(`SELECT * FROM vacancy WHERE name ~* '${search}' OR specialization ~* '${search}' OR time_mode ~* '${search}' 
+                    OR about ~ '${search}'`)
+                        .then((data) => {
+                            da2 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(err => console.log(getTime(), err));
+                else
                 if (check === "")
                     db.any("SELECT * FROM vacancy")
                         .then((data) => {
                             da2 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[0] === 1)
                     db.any("SELECT * FROM vacancy WHERE education = 'true'")
                         .then((data) => {
                             da2 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[1] === 2)
                     db.any("SELECT * FROM vacancy WHERE time_mode = 'Полный день'")
                         .then((data) => {
                             da2 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[2] === 3)
                     db.any("SELECT * FROM vacancy WHERE experience >= 10")
                         .then((data) => {
                             da2 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[3] === 4)
                     db.any("SELECT * FROM vacancy WHERE pay_b >= 30000")
                         .then((data) => {
                             da2 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
             }
             if (req.body.radio === "1") {
                 let check = req.body.check.toString();
+                let search = req.body.search_req.toString();
+                let isearch = search * 1;
+                if (req.body.search_req !== "")
+                    db.any(`SELECT * FROM profile WHERE first_name ~* '${search}' OR second_name ~* '${search}' 
+                    OR specialization ~* '${search}' OR time_mode ~* '${search}' OR about ~* '${search}'`)
+                        .then((data) => {
+                            da1 = data;
+                            res.json({da1, da2});
+                        })
+                        .catch(err => console.log(getTime(), err));
+                else
                 if (check === "")
                     db.any("SELECT * FROM profile")
                         .then((data) => {
                             da1 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[0] === 1)
                     db.any("SELECT * FROM profile WHERE education = 'true'")
                         .then((data) => {
                             da1 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[1] === 2)
                     db.any("SELECT * FROM profile WHERE time_mode = 'Полный день'")
                         .then((data) => {
                             da1 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[2] === 3)
                     db.any("SELECT * FROM profile WHERE experience >= 10")
                         .then((data) => {
                             da1 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
                 else if (req.body.check[3] === 4)
                     db.any("SELECT * FROM profile WHERE pay_b >= 30000")
                         .then((data) => {
                             da1 = data;
                             res.json({da1, da2});
                         })
-                        .catch(() => {
-                        });
+                        .catch(() => {});
             }
             break;
         }
@@ -218,7 +228,7 @@ app.post('/register', urlencodedParser, (req, res) => {
 
     db.none("INSERT INTO accounts (login, pass) VALUES($1, $2)", [req.body.login, hashedPass])
         .then(() => {
-            console.log("Account created");
+            console.log(getTime(), "Account created");
             req.session.message = req.body.login;
             res.redirect('profile');
         })
@@ -226,7 +236,6 @@ app.post('/register', urlencodedParser, (req, res) => {
             console.log(`${getTime()} Account wasnt created`, err);
             res.render('register', {errorCode: "Невозможно зарегестрироваться, возможно такой аккаунт уже существует!"})
         });
-    console.log(req.body);
 });
 
 app.get('/login', (req, res) => {
@@ -245,7 +254,6 @@ app.post('/login', urlencodedParser, (req, res) => {
             console.log(`${getTime()} password is ` + (hashedPass === pass));
             if (hashedPass === pass) {
                 req.session.message = req.body.login;
-                console.log(`${getTime()} ${req.session.message}`);
                 res.redirect('profile');
             }
             else {
@@ -275,7 +283,6 @@ app.post('/profile', jsonParser, (req, res) => {
         case "add": {
             db.one("SELECT first_name FROM profile WHERE login = $1", req.session.message)
                 .then(() => {
-                    console.log("empty");
                     db.none(`UPDATE profile SET first_name = $1, second_name = $2, birthdate = $3, education = $4, experience = $5,
                             specialization = $6, phone = $7, time_mode = $8, pay_b = $9, pay_t = $10, about = $11 WHERE login = $12`,
                         [req.body.Name, req.body.Second, req.body.Birthdate, req.body.Education, req.body.Experience,
@@ -288,7 +295,6 @@ app.post('/profile', jsonParser, (req, res) => {
                         });
                 })
                 .catch(() => {
-                    console.log("rejected");
                     db.none(`INSERT INTO profile (login, first_name, second_name, birthdate, education, experience, specialization, phone, time_mode, pay_b, pay_t, about) 
                     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [req.session.message, req.body.Name, req.body.Second, req.body.Birthdate,
                         req.body.Education, req.body.Experience, req.body.Specialization, req.body.Phone, req.body.Time, req.body.Pay_b, req.body.Pay_t, req.body.About])
@@ -304,7 +310,6 @@ app.post('/profile', jsonParser, (req, res) => {
         case "add-vac": {
             db.one("SELECT name FROM vacancy WHERE login = $1", req.session.message)
                 .then(() => {
-                    console.log("empty");
                     db.none(`UPDATE vacancy SET name = $1, age = $2, education = $3, experience = $4,
                             specialization = $5, phone = $6, time_mode = $7, pay_b = $8, pay_t = $9, about = $10 WHERE login = $11`,
                         [req.body.Name, req.body.Age, req.body.Education, req.body.Experience, req.body.Specialization,
@@ -317,7 +322,6 @@ app.post('/profile', jsonParser, (req, res) => {
                         });
                 })
                 .catch(() => {
-                    console.log("rejected");
                     db.none(`INSERT INTO vacancy (login, name, age, education, experience, specialization, phone, time_mode, pay_b, pay_t, about) 
                     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, [req.session.message, req.body.Name, req.body.Age,
                         req.body.Education, req.body.Experience, req.body.Specialization, req.body.Phone, req.body.Time, req.body.Pay_b, req.body.Pay_t, req.body.About])

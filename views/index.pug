@@ -11,7 +11,7 @@ html(lang='en')
             .search_bar
                 form.search_form(method="post", action="/", name="search")
                     label#search_label(for="search_input") Поиск
-                    input#search_input(type="search", name="search_req")
+                    input#search_input(type="search", name="search_req" autocomplete="off" placeholder="Введите запрос")
                     p#askingfor Я ищу:
                     ul.radio-ul(type="none")
                         li.radio-li

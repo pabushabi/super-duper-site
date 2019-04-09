@@ -122,6 +122,7 @@ if (_s.is("#visible") !== false){
 
 if (_s.is('#search_label') !== false) {
     let search_form = $('.search_form');
+    search_form.eq(0).on('submit', e => e.preventDefault());
     search_form.eq(0).on('change', () => {
         let sform = document.forms["search"];
         let inp = sform.elements["search_req"].value;

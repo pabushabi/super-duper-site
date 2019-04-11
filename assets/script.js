@@ -42,9 +42,6 @@ function addRes(da1) {
 }
 
 function addVac(da1, da2) {
-    let len;
-    // try { len = da1.length }
-    // catch { len = 0 }
     if (da2.length !== 0) {
         for (let i = da1.length; i < da2.length + da1.length; i++)
         {
@@ -90,7 +87,7 @@ if (_s.is('#section') != null) {
 function createAnim() {
     let art = $(".art");
     let arrow = $(".arrows");
-    art.click((e) => {
+    art.on("click",(e) => {
         if (art.eq(e.target.id).css("height") === '220px') {
             art.eq(e.target.id).css({'height':'32px', 'border-top':'1px solid rgba(27, 31, 35, 0.1)', 'background-color': '#fff',
                 'border-image': 'none'});
@@ -107,7 +104,7 @@ function createAnim() {
 if (_s.is("#visible") !== false){
     let pass = $("#pass");
     let visible = $("#visible");
-    visible.click(() => {
+    visible.on("click",() => {
         if (pass.attr("type") === "password") {
             pass.attr("type", "text");
             visible.attr("src","/assets/invisible.svg");
@@ -123,7 +120,7 @@ if (_s.is("#visible") !== false){
 if (_s.is('#search_label') !== false) {
     let search_form = $('.search_form');
     search_form.eq(0).on('submit', e => e.preventDefault());
-    search_form.eq(0).on('change', () => {
+    search_form.eq(0).on('input', () => {
         let sform = document.forms["search"];
         let inp = sform.elements["search_req"].value;
         let rad = sform.elements["radio-type"].value;
@@ -139,7 +136,6 @@ if (_s.is('#search_label') !== false) {
         xhr.open("POST", "/", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.addEventListener("load", () => {
-            // console.log(xhr.response);
             $(".art").remove();
             if (xhr.response === "" || xhr.response === undefined || xhr.response === null)
                 $("#error-art").css("visibility", "visible");
@@ -182,7 +178,6 @@ function resume_submit() {
     xhr.send(profile);
     xhr.addEventListener("load", () => {
         let submit = $("#submit");
-        submit.blur();
         submit.html("Сохранено!");
 
         setTimeout(() => {
@@ -221,7 +216,6 @@ function vac_submit() {
     xhr.send(profile);
     xhr.addEventListener("load", () => {
         let submit = $("#submit1");
-        submit.blur();
         submit.html("Сохранено!");
 
         setTimeout(() => {
@@ -248,8 +242,8 @@ if (_s.is(".resume-form") !== false) {
         $(".form-res").eq(0).css("right", "24%");
         $(".prof-inf").eq(0).css("left", "24%");
     }
-    $("#change_back").click(() => {
-        if ($(".vac-form").css("display") === "none") {
+    $("#change_back").on("click",() => {
+            if ($(".vac-form").css("display") === "none") {
             $("#change").html("Резюме");
             $(".vac-form").css("display", "block");
             $(".resume-form").css("display", "none");
@@ -261,10 +255,16 @@ if (_s.is(".resume-form") !== false) {
         }
     });
 
-    let pay = (b, t) => { b.change(() => {
+    let pay = (b, t) => { b.on("input", () => {
         t.prop("min", b.val());
         if (t.val() * 1 < b.val() * 1)
-            t.val(b.val())
+            t.val(b.val());
+        if (b.val() > 9000000) b.val(9000000);
+        if (b.val() < 0) b.val(0);
+        t.on("input", () => {
+            if (t.val() < 0) t.val(0);
+            if (t.val() > 9000000) t.val(9000000);
+        })
     }) };
     pay($("#i-payb"), $("#i-payt"));
     pay($("#v-payb"), $("#v-payt"));
@@ -278,10 +278,26 @@ if (_s.is(".resume-form") !== false) {
     birthday.prop("max", date);
     birthday.prop("min", dateOld);
 
-    // birthday.change(() => {
-    //     if (birthday.val() > date)
-    //
-    // });
+    birthday.on("input", () => {
+        if (birthday.val() > date)
+            birthday.val(date)
+    });
+
+    let exp = $("#i-ex");
+    exp.on("input", () => {
+        if (exp.val() > 50)
+            exp.val(50);
+        if (exp.val() < 0)
+            exp.val(0);
+    });
+
+    let vdate = $("#v-date");
+    vdate.on("input", () => {
+        if (vdate.val() > 100)
+            vdate.val(100);
+        if (vdate.val() < 0)
+            vdate.val(0)
+    });
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/profile", true);

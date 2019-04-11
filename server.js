@@ -1,13 +1,11 @@
 'use strict';
-
-// const fs = require('fs');
 const express = require('express');
 const app = express();
 const pug = require('pug');
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 const pgp = require('pg-promise')();
-const config = require('./sample_config'); //edit config.json adding path to db, keys for cookies & key for hashing passwords
+const config = require('./_config'); //edit config.json adding path to db, keys for cookies & key for hashing passwords
 const db = pgp(config.path);
 const jsonParser = express.json();
 const crypto = require('crypto');

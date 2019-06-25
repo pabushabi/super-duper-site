@@ -464,3 +464,39 @@ select :nth-child(2n) {
     font-size: large;
     visibility: hidden;
 }
+
+@media (device-width: 442px){
+    header {
+        /*height: 70px;*/
+    }
+    a.logo {
+        margin-left: 5%;
+        border: #f26065 2px solid;
+    }
+    #main {
+        width: 400px !important;
+    }
+    #section {
+        margin: 400px 44% 100px 6.35%;
+        border: #f26065 2px solid;
+        width: 380px !important;
+    }
+    .art {
+        flex: 1 400px;
+        width: 400px !important;
+    }
+    .search_bar {
+        right: 5%;
+        width: 400px;
+        height: 200px;
+        border: #f26065 2px solid;
+    }
+    .reg_log {
+        margin: 20px 3% 20px 20px;
+        border: #f26065 2px solid;
+    }
+    .reg_log > ul {
+        right: 10px;
+        top: 10px;
+    }
+}

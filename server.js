@@ -24,6 +24,12 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000
 }));
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 function getTime() {
     return `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`;
 }
@@ -84,6 +90,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', jsonParser, (req, res) => {
+    console.log("post-------------------------------------------------------------------");
+    console.log(req.body);
     switch (req.body.type) {
         case "articles": {
             let da1, da2;
@@ -112,6 +120,7 @@ app.post('/', jsonParser, (req, res) => {
         }
         case "search": {
             let da1 = "", da2 = "";
+            console.log(typeof req.body.check, req.body.check[0]);
             if (req.body.radio === "2") {
                 let check = req.body.check.toString();
                 let search = req.body.search_req.toString();
@@ -163,7 +172,7 @@ app.post('/', jsonParser, (req, res) => {
             if (req.body.radio === "1") {
                 let check = req.body.check.toString();
                 let search = req.body.search_req.toString();
-                let isearch = search * 1;
+                // let isearch = search * 1;
                 if (req.body.search_req !== "")
                     db.any(`SELECT * FROM profile WHERE first_name ~* '${search}' OR second_name ~* '${search}' 
                     OR specialization ~* '${search}' OR time_mode ~* '${search}' OR about ~* '${search}'`)
@@ -266,7 +275,7 @@ app.post('/login', urlencodedParser, (req, res) => {
 
 ///render profile page
 app.get('/profile', (req, res) => {
-    if (req.session.message === undefined) res.redirect('/404');
+    if (req.session.message === undefined) res.status(401).redirect('/404');
     else
         res.render('profile', {login: req.session.message});
 });

@@ -4,12 +4,12 @@
   "description": "",
   "main": "sever.js",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "cookie-session": "^1.3.3",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "npm": "^6.9.0",
-    "pg-promise": "^8.6.4",
-    "pug": "^2.0.3"
+    "pg-promise": "^8.7.2",
+    "pug": "^2.0.4"
   },
   "devDependencies": {
     "debug": "latest"

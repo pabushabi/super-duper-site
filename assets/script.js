@@ -6,8 +6,8 @@ function createArt(h2body, i, bodyText) {
     let h2 = $('<h2></h2>');
     let p = $('<p class="text"></p>');
     let img = $('<img src="/assets/arrow.svg" alt="arrow" class="arrows">');
-    if (document.documentElement.clientHeight > 760)
-        img.css("top","-120px");
+    // if (document.documentElement.clientHeight > 760)
+    //     img.css("top","-120px");
     article.attr("id", i);
     h2.attr("id", i);
     p.attr("id", i);
@@ -43,8 +43,7 @@ function addRes(da1) {
 
 function addVac(da1, da2) {
     if (da2.length !== 0) {
-        for (let i = da1.length; i < da2.length + da1.length; i++)
-        {
+        for (let i = da1.length; i < da2.length + da1.length; i++) {
             let {
                 name, age, education, experience, specialization, phone,
                 time_mode, pay_b, pay_t, about
@@ -64,10 +63,10 @@ function addVac(da1, da2) {
 }
 
 if (_s.is('#section') != null) {
-    if (document.documentElement.clientWidth > 1500){
-        $('#section').css("margin", "0 34% 0 16.3%");
-        $(".bar").eq(0).css("rigth", "20%");
-    }
+    // if (document.documentElement.clientWidth > 1500){
+    //     $('#section').css("margin", "0 34% 0 16.3%");
+    //     $(".bar").eq(0).css("rigth", "20%");
+    // }
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/", true);
@@ -87,38 +86,43 @@ if (_s.is('#section') != null) {
 function createAnim() {
     let art = $(".art");
     let arrow = $(".arrows");
-    art.on("click",(e) => {
+    art.on("click", (e) => {
         if (art.eq(e.target.id).css("height") === '220px') {
-            art.eq(e.target.id).css({'height':'32px', 'border-top':'1px solid rgba(27, 31, 35, 0.1)', 'background-color': '#fff',
-                'border-image': 'none'});
-            arrow.eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(0deg)'});
+            art.eq(e.target.id).css({
+                'height': '32px', 'border-top': '1px solid rgba(27, 31, 35, 0.1)', 'background-color': '#fff',
+                'border-image': 'none'
+            });
+            arrow.eq(e.target.id).css({'transition': 'transform 0.4s', 'transform': 'rotate(0deg)'});
         } else {
             art.eq(e.target.id).css("height", "220px");
-            art.eq(e.target.id).css({'height':'220px', 'border-image':'linear-gradient(75deg, var(--mainColor), #6d78ff)',
-                'background-color': 'rgba(0, 0, 0, .015)'});
-            arrow.eq(e.target.id).css({'transition':'transform 0.4s', 'transform':'rotate(180deg)'});
+            art.eq(e.target.id).css({
+                'height': '220px', 'border-image': 'linear-gradient(75deg, var(--mainColor), #6d78ff) 1',
+                'background-color': 'rgba(0, 0, 0, .015)'
+            });
+            arrow.eq(e.target.id).css({'transition': 'transform 0.4s', 'transform': 'rotate(180deg)'});
         }
     })
 }
 
-if (_s.is("#visible") !== false){
+if (_s.is("#visible") !== false) {
     let pass = $("#pass");
     let visible = $("#visible");
-    visible.on("click",() => {
+    visible.on("click", () => {
         if (pass.attr("type") === "password") {
             pass.attr("type", "text");
-            visible.attr("src","/assets/invisible.svg");
+            visible.attr("src", "/assets/invisible.svg");
         } else {
             pass.attr("type", "password");
-            visible.attr("src","/assets/visible.svg");
+            visible.attr("src", "/assets/visible.svg");
         }
     });
     if (document.documentElement.clientWidth > 1500)
-        $(".reg_form").eq(0).css("left","43%");
+        $(".reg_form").eq(0).css("left", "43%");
 }
 
 if (_s.is('#search_label') !== false) {
     let search_form = $('.search_form');
+    // $("#askingfor").text(document.documentElement.clientWidth);
     search_form.eq(0).on('submit', e => e.preventDefault());
     search_form.eq(0).on('input', () => {
         let sform = document.forms["search"];
@@ -128,7 +132,7 @@ if (_s.is('#search_label') !== false) {
         let chechs = [];
         for (let i = 1; i < 5; i++)
             if (document.getElementById("c" + i).checked)
-                chechs[i-1] = i;
+                chechs[i - 1] = i;
 
         let req = JSON.stringify({type: "search", search_req: inp, radio: rad, check: chechs});
         console.log(req);
@@ -141,12 +145,13 @@ if (_s.is('#search_label') !== false) {
                 $("#error-art").css("visibility", "visible");
             let {da1, da2} = JSON.parse(xhr.response);
             addRes(da1);
-            
+
             addVac(da1, da2);
         });
         xhr.send(req);
     })
 }
+
 function resume_submit() {
     let name = $("#i-name").val();
     let secondName = $("#i-secname").val();
@@ -164,8 +169,9 @@ function resume_submit() {
         pay_t === "" || about === "") {
         $("#error").css("display", "block");
         return;
+    } else {
+        $("#error").css("display", "none")
     }
-    else { $("#error").css("display", "none") }
 
     let profile = JSON.stringify({
         type: "add", Name: name, Second: secondName, Birthdate: birthdate, Education: education, Experience: experience,
@@ -202,8 +208,9 @@ function vac_submit() {
         pay_t === "" || about === "") {
         $("#error1").css("display", "block");
         return;
+    } else {
+        $("#error1").css("display", "none")
     }
-    else { $("#error1").css("display", "none") }
 
     let profile = JSON.stringify({
         type: "add-vac", Name: name, Age: age, Education: education, Experience: experience,
@@ -224,7 +231,7 @@ function vac_submit() {
     });
 }
 
-function logout(){
+function logout() {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/profile", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -238,34 +245,35 @@ function logout(){
 if (_s.is(".resume-form") !== false) {
     $(".log").css("display", "none");
 
-    if (document.documentElement.clientWidth > 1500){
+    if (document.documentElement.clientWidth > 1500) {
         $(".form-res").eq(0).css("right", "24%");
         $(".prof-inf").eq(0).css("left", "24%");
     }
-    $("#change_back").on("click",() => {
-            if ($(".vac-form").css("display") === "none") {
+    $("#change_back").on("click", () => {
+        if ($(".vac-form").css("display") === "none") {
             $("#change").html("Резюме");
             $(".vac-form").css("display", "block");
             $(".resume-form").css("display", "none");
-        }
-        else {
+        } else {
             $("#change").html("Вакансия");
             $(".vac-form").css("display", "none");
             $(".resume-form").css("display", "block");
         }
     });
 
-    let pay = (b, t) => { b.on("input", () => {
-        t.prop("min", b.val());
-        if (t.val() * 1 < b.val() * 1)
-            t.val(b.val());
-        if (b.val() > 9000000) b.val(9000000);
-        if (b.val() < 0) b.val(0);
-        t.on("input", () => {
-            if (t.val() < 0) t.val(0);
-            if (t.val() > 9000000) t.val(9000000);
+    let pay = (b, t) => {
+        b.on("input", () => {
+            t.prop("min", b.val());
+            if (t.val() * 1 < b.val() * 1)
+                t.val(b.val());
+            if (b.val() > 9000000) b.val(9000000);
+            if (b.val() < 0) b.val(0);
+            t.on("input", () => {
+                if (t.val() < 0) t.val(0);
+                if (t.val() > 9000000) t.val(9000000);
+            })
         })
-    }) };
+    };
     pay($("#i-payb"), $("#i-payt"));
     pay($("#v-payb"), $("#v-payt"));
 
